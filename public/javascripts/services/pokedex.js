@@ -1,22 +1,15 @@
 import BaseService from './base';
-import {defaults} from 'lodash';
+import {partialRight, get, defaults, partial} from 'lodash';
 
 var PokedexService = {
   BASE_URL : BaseService.BASE_URL + '/pokedex/1',
 
   get(cache = true) {
-    var url = PokedexService.BASE_URL,
+    var url = this.BASE_URL,
         _this = this;
 
-
-    var promise = new Promise(function(resolve, reject) {
-      _this.doRequest(url, cache, resolve, reject);
-    })
-    .then(function(json) {
-      return json.pokemon;
-    });
-
-    return promise;
+    return new Promise(partial(_this.doRequest, url, cache))
+      .then(partialRight(get, 'pokemon'));
   }
 };
 

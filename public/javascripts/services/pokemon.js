@@ -1,17 +1,13 @@
-import {defaults} from 'lodash';
+import {defaults, partial} from 'lodash';
 import BaseService from './base';
 
 var PokemonService = {
   BASE_URL: BaseService.BASE_URL + '/pokemon',
 
-  get(path, cache = true) {
-    var id = path.match(/\/\d+/)[0];
+  get(id, cache = true) {
+    var path = this.BASE_URL + '/' + id;
 
-    path = this.BASE_URL + id;
-
-    return new Promise(function(resolve, reject) {
-      this.doRequest(path, cache, resolve, reject);
-    }.bind(this));
+    return new Promise(partial(this.doRequest, path, cache));
   }
 };
 
