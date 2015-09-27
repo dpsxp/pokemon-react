@@ -1,14 +1,16 @@
 /* jshint esnext: true */
 import React from 'react';
-import PokedexService from './services/pokedex';
+import { Router, Route, Link } from 'react-router';
 import List from './components/list';
+import MainItem from './components/main_item';
 
-PokedexService
-  .get()
-  .then(function(data) {
-    React.render(
-      React.createElement(List, { pokemons: data}),
-      document.querySelector('#app')
-    );
-  });
-
+React.render((
+  /* jshint ignore: start */
+  <Router>
+    <Route path="/" component={List} />
+    <Route path="/pokemon/:id" component={MainItem} />
+  </Router>
+  /* jshint ignore: end */
+  ),
+  document.querySelector('#app')
+);
