@@ -1,5 +1,6 @@
 import Cache from './cache';
 import url from 'url';
+import { partial } from 'lodash';
 
 const BaseService = {
   BASE_URL : 'http://pokeapi.co/api/v1',
@@ -41,9 +42,9 @@ const BaseService = {
   },
 
   get(path, cache = true) {
-    path = url.resolve(this.BASE_URL, path);
+    path = this.BASE_URL + path;
 
-    return this.doRequest(path, cache, resolve, reject);
+    return new Promise(partial(this.doRequest, path, cache));
   }
 };
 
