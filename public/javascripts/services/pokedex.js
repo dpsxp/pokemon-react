@@ -1,49 +1,25 @@
-/* jshint esnext: true */
+import BaseService from './base';
+import {defaults} from 'lodash';
 
-import cache from './.cache';
-const BASE_URL = 'http://pokeapi.co/api/v1/pokedex/1';
+var PokedexService = {
+  BASE_URL : BaseService.BASE_URL + '/pokedex/1',
 
-function doRequest(cache, resolve, reject) {
-  let xhr = new XMLHttpRequest();
+  get(cache = true) {
+    var url = PokedexService.BASE_URL,
+        _this = this;
 
-  xhr.open('GET', BASE_URL, true);
 
-  xhr.onreadystatechange = function() {
-    if (xhr.readyState === 4) {
-      var json = {};
-
-      try {
-        json = JSON.parse(xhr.responseText);
-      } catch (e) {
-        return reject(e, xhr);
-      }
-
-      if (cache) {
-        cache.set(BASE_URL, json.pokemon);
-      }
-
-      resolve(json.pokemon);
-    }
-  };
-
-  xhr.onerror = function(evt) {
-    reject(evt, xhr);
-  };
-
-  xhr.send();
-}
-
-class PokedexService {
-  static get(cache = true) {
-    return new Promise(function(resolve, reject) {
-      var cachedData = cache.get(BASE_URL);
-      if (cachedData) {
-        resolve(cachedData);
-      } else {
-        return doRequest(cache, resolve, reject);
-      }
+    var promise = new Promise(function(resolve, reject) {
+      _this.doRequest(url, cache, resolve, reject);
+    })
+    .then(function(json) {
+      return json.pokemon;
     });
+
+    return promise;
   }
-}
+};
+
+defaults(PokedexService, BaseService);
 
 export default PokedexService;
