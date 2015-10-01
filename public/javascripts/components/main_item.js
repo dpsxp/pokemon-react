@@ -3,12 +3,14 @@ import PokemonService from '../services/pokemon';
 import ListItem from './list_item';
 import Ability from './ability';
 import Description from './description';
+import Sprites from './sprites';
 
 const MainItem = React.createClass({
   getInitialState() {
     return {
       pokemon: {
         abilities: [],
+        sprites: [],
         descriptions: [],
         evolutions: []
       }
@@ -50,6 +52,10 @@ const MainItem = React.createClass({
           }
         },
 
+        imageItem = function () {
+          return <Sprites sprites={ pokemon.sprites } />
+        },
+
         shouldRender = function(prop, cb) {
           if (pokemon[prop].length == 0) {
             return '';
@@ -71,6 +77,7 @@ const MainItem = React.createClass({
         <h2>{pokemon.name}</h2>
 
         { descriptionItem() }
+        { imageItem() }
 
         <p>HP: {pokemon.hp}</p>
         <p>Attack: {pokemon.attack}</p>
