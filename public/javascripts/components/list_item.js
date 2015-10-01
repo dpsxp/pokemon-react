@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 
 const ListItem = React.createClass({
   getId() {
@@ -12,9 +13,9 @@ const ListItem = React.createClass({
     /* jshint ignore:start */
     return(
       <li className="list_item">
-        <a href={"#/pokemon" + this.getId()}>
+        <Link to={`/pokemon${this.getId()}`}>
           <h3>{pokemon.name}</h3>
-        </a>
+        </Link>
       </li>
     );
     /* jshint ignore:end */
