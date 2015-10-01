@@ -8,7 +8,7 @@ const Ability = React.createClass({
   },
 
   getInfo() {
-    var id = this.props.info.resource_uri.match(/\/\d+/)[0];
+    var id = this.props.ability.resource_uri.match(/\/\d+/)[0];
 
     return AbilityService.get(id);
   },
@@ -24,11 +24,11 @@ const Ability = React.createClass({
 
   render() {
     /* jshint ignore: start */
-    var info = this.props.info;
+    var ability = this.props.ability;
 
     return(
       <div className="ability-ttem">
-        <p>{info.name}</p>
+        <p>{ability.name}</p>
         <Accordion message={this.state.info.description} onClick={this.showInfo} />
       </div>
     );
