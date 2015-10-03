@@ -13,8 +13,12 @@ describe('BaseService', function() {
   });
 
   describe('#doRequest', function() {
+    var path, response;
+
     beforeEach(function() {
       this.server = sinon.fakeServer.create();
+      path = `${BaseService.BASE_URL}/pokemons`;
+      response = { pokemons: [] };
     });
 
     afterEach(function() {
@@ -22,8 +26,6 @@ describe('BaseService', function() {
     });
 
     it('makes a http request based on path', function(done) {
-      var path = `${BaseService.BASE_URL}/pokemons`,
-          response = { pokemons: [] };
 
       this.server.respondWith(
         'GET',
@@ -43,9 +45,6 @@ describe('BaseService', function() {
     });
 
     it('caches the response if the cache param is true', function() {
-      var path = `${BaseService.BASE_URL}/pokemons`,
-          response = { pokemons: [] };
-
       this.server.respondWith(
         'GET',
         path,
@@ -61,6 +60,44 @@ describe('BaseService', function() {
       this.server.respond();
 
       expect(Cache.set).toHaveBeenCalledWith(path, response);
+    });
+
+    it('calls the error callback when something went wrong', function() {
+      this.server.respondWith(
+        'GET',
+        path,
+        [404, {'Content-Type': 'application/json'}, '{}']
+      );
+
+      var foo = {
+        error: function() {}
+      };
+
+      spyOn(foo, 'error');
+
+      BaseService.doRequest(path, false, undefined, foo.error);
+      this.server.respond();
+
+      expect(foo.error).toHaveBeenCalled();
+    });
+
+    it('calls the error callback when the server response is not a valid json', function() {
+      this.server.respondWith(
+        'GET',
+        path,
+        [404, {'Content-Type': 'application/json'}, '']
+      );
+
+      var foo = {
+        error: function() {}
+      };
+
+      spyOn(foo, 'error');
+
+      BaseService.doRequest(path, false, undefined, foo.error);
+      this.server.respond();
+
+      expect(foo.error).toHaveBeenCalled();
     });
   });
 
