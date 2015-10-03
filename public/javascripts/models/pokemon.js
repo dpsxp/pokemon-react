@@ -1,12 +1,25 @@
+import { defaults } from  'lodash';
+
 function getId(url) {
   var id = url.match(/\/(\d+)/)[1];
   return parseInt(id, 10);
 }
 
+var base = {
+  evolutions: [],
+  abilities: [],
+  descriptions: [],
+  sprites: []
+};
+
 class Pokemon {
-  constructor(data) {
+  constructor(data = {}) {
+    defaults(data, base);
     Object.keys(data).forEach( prop => this[prop] = data[prop] );
-    this.id = getId(data.resource_uri);
+
+    if (!data.id && data.resource_uri) {
+      this.id = getId(data.resource_uri);
+    }
   }
 }
 
