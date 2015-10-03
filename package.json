@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./bin/www"
+    "start": "nodemon ./bin/www",
+    "test": "karma start"
   },
   "dependencies": {
     "babelify": "^6.3.0",
@@ -20,5 +21,12 @@
     "react-router": "^1.0.0-rc1",
     "reactify": "^1.1.1",
     "serve-favicon": "~2.2.0"
+  },
+  "devDependencies": {
+    "jasmine-core": "^2.3.4",
+    "karma": "^0.13.10",
+    "karma-browserify": "^4.4.0",
+    "karma-chrome-launcher": "^0.2.0",
+    "karma-jasmine": "^0.3.6"
   }
 }
