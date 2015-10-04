@@ -8,7 +8,6 @@ import PokemonService from '../services/pokemon';
 import PokemonModel from '../models/pokemon';
 
 // Components
-import Ability from './ability';
 import Description from './description';
 import Sprites from './sprites';
 import Evolutions from './evolutions';
