@@ -1,5 +1,5 @@
 import React from 'react';
-import AbilityService from '../services/ability';
+import BaseService from '../services/base';
 import Accordion from './accordion';
 
 const Ability = React.createClass({
@@ -8,9 +8,7 @@ const Ability = React.createClass({
   },
 
   getInfo() {
-    var id = this.props.ability.resource_uri.match(/\/\d+/)[0];
-
-    return AbilityService.get(id);
+    return BaseService.get(this.props.ability.resource_uri);
   },
 
   showInfo(evt) {

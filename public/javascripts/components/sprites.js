@@ -1,13 +1,6 @@
 import React from 'react';
 import ImageItem from './image_item';
-import SpritesService from '../services/sprites';
-
-const Helper = {
-  getId(resource) {
-    var id = resource.resource_uri.match(/\/\d+/)[0];
-    return id;
-  }
-};
+import BaseService from '../services/base';
 
 const Sprites = React.createClass({
   mixins: [Helper],
@@ -20,7 +13,7 @@ const Sprites = React.createClass({
 
   loadSprites(sprites) {
     Promise
-      .all(sprites.map((sprite) => SpritesService.get(this.getId(sprite))))
+      .all(sprites.map((sprite) => BaseService.get(sprite.resource_uri)))
       .then((response) => this.setState({ sprites: response }));
   },
 
