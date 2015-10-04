@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "start": "nodemon ./bin/www",
-    "test": "karma start"
+    "test": "karma start",
+    "install_hook": "cp -f ./hooks/pre-push ./.git/hooks/",
+    "postinstall": "npm run install_hook"
   },
   "dependencies": {
     "babelify": "^6.3.0",
