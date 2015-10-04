@@ -8,15 +8,13 @@ const List = React.createClass({
     return { pokemons: [] };
   },
 
-  getPokemons() {
-   return PokedexService.get();
+  loadPokemons() {
+    PokedexService.get()
+      .then((pokemons) => this.setState({ pokemons: pokemons }));
   },
 
   componentDidMount() {
-    var _this = this;
-
-    this.getPokemons()
-      .then((pokemons) => _this.setState({ pokemons: pokemons }));
+    this.loadPokemons();
   },
 
   render() {
@@ -24,10 +22,14 @@ const List = React.createClass({
     var pokemons = this.state.pokemons;
 
     return(
-      <div>
+      <div className="mdl-grid">
         {
           pokemons.map(function(pokemon) {
-            return <ListItem pokemon={pokemon} />
+            return (
+              <div className="mdl-cell mdl-cell--4-col">
+                <ListItem pokemon={pokemon} />
+              </div>
+            );
           })
         }
       </div>
