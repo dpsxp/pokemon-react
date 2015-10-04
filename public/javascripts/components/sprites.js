@@ -32,9 +32,7 @@ const Sprites = React.createClass({
 
     return(
       <div className="sprites">
-        <ul>
-          { sprites.map(createImage) }
-        </ul>
+        { sprites.map(createImage) }
       </div>
     );
     /* jshint ignore: end */
