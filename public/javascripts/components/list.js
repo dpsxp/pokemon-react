@@ -2,6 +2,7 @@
 import React from 'react';
 import PokedexService from '../services/pokedex';
 import ListItem from './list_item';
+import LoadingScreen from './loading_screen';
 
 const List = React.createClass({
   getInitialState() {
@@ -10,7 +11,7 @@ const List = React.createClass({
 
   loadPokemons() {
     PokedexService.get()
-      .then((pokemons) => this.setState({ pokemons: pokemons }));
+      .then((pokemons) => this.setState({ pokemons: pokemons, loaded: true }));
   },
 
   componentDidMount() {
@@ -20,6 +21,10 @@ const List = React.createClass({
   render() {
     /* jshint ignore:start */
     var pokemons = this.state.pokemons;
+
+    if (!this.state.loaded) {
+      return <LoadingScreen />
+    }
 
     return(
       <div className="mdl-grid">

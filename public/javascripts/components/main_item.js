@@ -12,26 +12,25 @@ import Ability from './ability';
 import Description from './description';
 import Sprites from './sprites';
 import Evolutions from './evolutions';
+import LoadingScreen from './loading_screen';
 
 
 const MainItem = React.createClass({
   getInitialState() {
     return {
-      pokemon: new PokemonModel()
+      pokemon: new PokemonModel(),
+      loaded: false
     };
   },
 
   loadPokemon(id) {
-    var _this = this;
-
     return PokemonService.get(id)
-      .then(function(pokemon) {
-        _this.setState({ pokemon: pokemon });
-      });
+      .then((pokemon) => this.setState({ pokemon: pokemon, loaded: true }));
   },
 
   componentWillReceiveProps(nextProps) {
     this.loadPokemon(nextProps.params.id);
+    this.setState({ loaded: false });
   },
 
   componentDidMount() {
@@ -46,6 +45,10 @@ const MainItem = React.createClass({
             return <Description description={ pokemon.descriptions[0] } />
           }
         };
+
+    if (!this.state.loaded) {
+      return <LoadingScreen />
+    }
 
     return(
       <div className="mdl-grid">
