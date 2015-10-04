@@ -7,6 +7,10 @@
     "test": "karma start",
     "install_hook": "cp -f ./hooks/pre-push ./.git/hooks/"
   },
+  "engines": {
+    "node": ">= 0.12.x",
+    "npm": ">= 2.x.x"
+  },
   "dependencies": {
     "babelify": "^6.3.0",
     "body-parser": "~1.12.0",
