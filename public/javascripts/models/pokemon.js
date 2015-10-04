@@ -1,4 +1,6 @@
 import { defaults, capitalize } from  'lodash';
+import BaseService from  '../services/base';
+import url from  'url';
 
 function getId(url) {
   var id = url.match(/\/(\d+)/)[1];
@@ -33,6 +35,12 @@ class Pokemon {
       data.name = data.to;
       return pokemonFactory(data);
     });
+  }
+
+  thumbUrl() {
+    /* jshint ignore: start */
+    return url.resolve(BaseService.BASE_URL, `/media/img/${this.id}.png`);
+    /* jshint ignore: end */
   }
 }
 
