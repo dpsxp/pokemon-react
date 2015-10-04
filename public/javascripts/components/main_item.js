@@ -58,6 +58,7 @@ const MainItem = React.createClass({
 
         <div className="mdl-cell mdl-cell--8-col">
           { descriptionItem() }
+          <h3>Status</h3>
           <ul>
             <li>HP: {pokemon.hp}</li>
             <li>Attack: {pokemon.attack}</li>

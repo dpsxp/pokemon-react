@@ -17,7 +17,7 @@ const Evolutions = React.createClass({
 
     return(
       <div>
-        <h4>Evolutions</h4>
+        <h3>Evolutions</h3>
         <Accordion>
           { evolutions.map(createItem) }
         </Accordion>
