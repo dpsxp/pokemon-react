@@ -6,11 +6,11 @@ const ListItem = React.createClass({
     var pokemon = this.props.pokemon;
     /* jshint ignore:start */
     return(
-      <li className="list_item">
+      <div>
         <Link to={`/pokemon/${pokemon.id}`}>
           <h3>{pokemon.name}</h3>
         </Link>
-      </li>
+      </div>
     );
     /* jshint ignore:end */
   }
