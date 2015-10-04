@@ -1,5 +1,5 @@
 import BaseService from './base';
-import { partialRight, get, defaults } from 'lodash';
+import { partialRight, defaults } from 'lodash';
 import { pokemonFactory } from '../models/pokemon';
 
 var PokedexService = {
@@ -7,8 +7,7 @@ var PokedexService = {
 
   get(cache = true) {
     return BaseService.get.call(this, '', cache)
-      .then(partialRight(get, 'pokemon'))
-      .then( pokemons => pokemons.map(pokemonFactory) );
+      .then( ({ pokemon }) => pokemon.map(pokemonFactory) );
   }
 };
 
