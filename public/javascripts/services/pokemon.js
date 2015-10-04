@@ -1,4 +1,4 @@
-import { get, defaults, partial, partialRight } from 'lodash';
+import { defaults } from 'lodash';
 import BaseService from './base';
 import { pokemonFactory } from '../models/pokemon';
 
@@ -7,9 +7,7 @@ var PokemonService = {
 
   get(id, cache = true) {
     var path = this.BASE_URL + '/' + id;
-
-    return new Promise(partial(this.doRequest, path, cache))
-      .then(pokemonFactory);
+    return BaseService.get(path, cache).then(pokemonFactory);
   }
 };
 
