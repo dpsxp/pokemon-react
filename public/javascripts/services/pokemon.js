@@ -9,11 +9,7 @@ var PokemonService = {
     var path = this.BASE_URL + '/' + id;
 
     return new Promise(partial(this.doRequest, path, cache))
-      .then(pokemonFactory)
-      .then( pokemon => {
-        pokemon.evolutions = pokemon.evolutions.map(pokemonFactory);
-        return pokemon;
-      });
+      .then(pokemonFactory);
   }
 };
 

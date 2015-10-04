@@ -20,6 +20,8 @@ class Pokemon {
     if (!data.id && data.resource_uri) {
       this.id = getId(data.resource_uri);
     }
+
+    this.evolutions = data.evolutions.map(pokemonFactory);
   }
 }
 
