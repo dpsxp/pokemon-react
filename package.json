@@ -5,8 +5,7 @@
   "scripts": {
     "start": "nodemon ./bin/www",
     "test": "karma start",
-    "install_hook": "cp -f ./hooks/pre-push ./.git/hooks/",
-    "postinstall": "npm run install_hook"
+    "install_hook": "cp -f ./hooks/pre-push ./.git/hooks/"
   },
   "engines": {
     "node": ">= 0.12.x",
