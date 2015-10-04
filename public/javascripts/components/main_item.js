@@ -4,16 +4,12 @@ import ListItem from './list_item';
 import Ability from './ability';
 import Description from './description';
 import Sprites from './sprites';
+import PokemonModel from '../models/pokemon';
 
 const MainItem = React.createClass({
   getInitialState() {
     return {
-      pokemon: {
-        abilities: [],
-        sprites: [],
-        descriptions: [],
-        evolutions: []
-      }
+      pokemon: new PokemonModel()
     };
   },
 

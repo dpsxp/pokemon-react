@@ -16,8 +16,8 @@ const BaseService = {
 
     xhr.open('GET', path, true);
 
-    xhr.onreadystatechange = function() {
-      if (xhr.readyState === 4) {
+    xhr.onload = function() {
+      if (xhr.status === 200) {
         var json = {};
 
         try {
@@ -31,6 +31,8 @@ const BaseService = {
         }
 
         resolve(json);
+      } else {
+        reject(new Error('Something went wrong'), xhr);
       }
     };
 
@@ -42,7 +44,7 @@ const BaseService = {
   },
 
   get(path, cache = true) {
-    path = this.BASE_URL + path;
+    path = url.resolve(this.BASE_URL, path);
 
     return new Promise(partial(this.doRequest, path, cache));
   }

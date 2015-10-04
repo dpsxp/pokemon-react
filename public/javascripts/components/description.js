@@ -1,5 +1,5 @@
 import React from 'react';
-import DescriptionService from '../services/description';
+import BaseService from '../services/base';
 
 const Description = React.createClass({
   getInitialState() {
@@ -8,15 +8,9 @@ const Description = React.createClass({
     };
   },
 
-  getId() {
-    var description = this.props.description;
-    var id = description.resource_uri.match(/\/\d+/)[0];
-    return id;
-  },
-
   componentWillMount() {
-    DescriptionService
-      .get(this.getId())
+    BaseService
+      .get(this.props.description.resource_uri)
       .then((description) => this.setState({ description: description }));
   },
 
