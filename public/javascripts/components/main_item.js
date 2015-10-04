@@ -1,10 +1,18 @@
+// libs
 import React from 'react';
+
+// Services
 import PokemonService from '../services/pokemon';
-import ListItem from './list_item';
+
+// Model
+import PokemonModel from '../models/pokemon';
+
+// Components
 import Ability from './ability';
 import Description from './description';
 import Sprites from './sprites';
-import PokemonModel from '../models/pokemon';
+import Evolutions from './evolutions';
+
 
 const MainItem = React.createClass({
   getInitialState() {
@@ -33,56 +41,35 @@ const MainItem = React.createClass({
   render() {
     /* jshint ignore: start */
     var pokemon = this.state.pokemon,
-        createItem = function(evo) {
-          evo.name = evo.to;
-          return <ListItem pokemon={evo} />
-        },
-
-        abilityItem = function(abi) {
-          return <Ability ability={abi} />
-        },
-
         descriptionItem = function() {
           if (pokemon.descriptions.length > 0) {
             return <Description description={ pokemon.descriptions[0] } />
           }
-        },
-
-        imageItem = function () {
-          return <Sprites sprites={ pokemon.sprites } />
-        },
-
-        shouldRender = function(prop, cb) {
-          if (pokemon[prop].length == 0) {
-            return '';
-          } else {
-            var itemName = prop[0].toUpperCase() + prop.slice(1);
-
-            return(
-              <div>
-                <p>{ itemName }</p>
-                { pokemon[prop].map(cb) }
-              </div>
-            );
-          }
         };
 
-
     return(
-      <div class="main-item">
-        <h2>{pokemon.name}</h2>
+      <div className="mdl-grid">
+        <div className="mdl-cell mdl-cell--12-col">
+          <h2>{ pokemon.name }</h2>
+        </div>
 
-        { descriptionItem() }
-        { imageItem() }
+        <div className="mdl-cell mdl-cell--8-col">
+          { descriptionItem() }
+          <ul>
+            <li>HP: {pokemon.hp}</li>
+            <li>Attack: {pokemon.attack}</li>
+            <li>Defense: {pokemon.defense}</li>
+            <li>Speed: {pokemon.speed}</li>
+          </ul>
+        </div>
 
-        <p>HP: {pokemon.hp}</p>
-        <p>Attack: {pokemon.attack}</p>
-        <p>Defense: {pokemon.defense}</p>
-        <p>Speed: {pokemon.speed}</p>
+        <div className="mdl-cell mdl-cell--2-col">
+          <Sprites sprites={ pokemon.sprites } />
+        </div>
 
-
-        { shouldRender('abilities', abilityItem) }
-        { shouldRender('evolutions', createItem) }
+        <div className="mdl-cell mdl-cell--12-col">
+          <Evolutions evolutions={ pokemon.evolutions } />
+        </div>
 
       </div>
     );
