@@ -1,9 +1,18 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  .mdl-layout.mdl-js-layout.mdl-layout--fixed-header
+    header.mdl-layout__header
+      .mdl-layout__header-row
+        span.mdl-layout-title= title
 
-  nav#nav
+        .mdl-layout-spacer
 
-  #app
+    .mdl-layout__drawer
+      #nav
+
+    main.mdl-layout__content
+      #app.page-content
+
+    .mdl-mini-footer
+      span Made with love by Daniel Paulino
