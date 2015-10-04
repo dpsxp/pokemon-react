@@ -6,6 +6,12 @@ const MainNav = React.createClass({
     return { back: '' };
   },
 
+  toggle: function() {
+    var node = this.getDOMNode();
+    node.parentNode.classList.toggle('is-visible');
+  },
+
+
   componentWillReceiveProps(nextProps) {
     /* jshint ignore: start */
     this.setState({ back: `/${this.props.params.splat}` });
@@ -17,12 +23,12 @@ const MainNav = React.createClass({
     var backLink = '';
 
     if (this.state.back) {
-      backLink = <Link className="mdl-navigation__link" to={ this.state.back }>Back</Link>;
+      backLink = <Link onClick={ this.toggle } className="mdl-navigation__link" to={ this.state.back }>Back</Link>;
     }
 
     return(
       <nav className="mdl-navigation">
-        <Link className="mdl-navigation__link" to='/'>Home</Link>
+        <Link onClick={ this.toggle } className="mdl-navigation__link" to='/'>Home</Link>
         { backLink }
       </nav>
     );
