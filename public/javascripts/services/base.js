@@ -44,7 +44,7 @@ const BaseService = {
   },
 
   get(path, cache = true) {
-    path = this.BASE_URL + path;
+    path = url.resolve(this.BASE_URL, path);
 
     return new Promise(partial(this.doRequest, path, cache));
   }
