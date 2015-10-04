@@ -3,8 +3,6 @@ import ImageItem from './image_item';
 import BaseService from '../services/base';
 
 const Sprites = React.createClass({
-  mixins: [Helper],
-
   getInitialState() {
     return {
       sprites: []
