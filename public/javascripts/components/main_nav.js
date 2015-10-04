@@ -5,12 +5,8 @@ const MainNav = React.createClass({
   render() {
     /* jshint ignore: start */
     return(
-      <nav>
-        <ul>
-          <li>
-            <Link to='/'>Home</Link>
-          </li>
-        </ul>
+      <nav className="mdl-navigation">
+        <Link className="mdl-navigation__link" to='/'>Home</Link>
       </nav>
     );
     /* jshint ignore: end */
