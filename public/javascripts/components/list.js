@@ -3,15 +3,30 @@ import React from 'react';
 import PokedexService from '../services/pokedex';
 import ListItem from './list_item';
 import LoadingScreen from './loading_screen';
+import Lazy from './lazy';
+import { flatten } from 'lodash';
 
 const List = React.createClass({
   getInitialState() {
-    return { pokemons: [] };
+    return { pokemons: [], page: 0 };
   },
 
   loadPokemons() {
+
     PokedexService.get()
-      .then((pokemons) => this.setState({ pokemons: pokemons, loaded: true }));
+      .then((pokemons) => {
+        var page = this.state.page,
+            oldData = this.state.pokemons,
+            offset = page * 50,
+            limit = (page * 50) + 50;
+
+        this.setState({
+          pokemons: flatten(oldData.concat(pokemons.slice(offset, limit))),
+          page: page + 1,
+          loaded: true,
+          finished: (page * 50) >= pokemons.length
+        });
+      });
   },
 
   componentDidMount() {
@@ -20,10 +35,15 @@ const List = React.createClass({
 
   render() {
     /* jshint ignore:start */
-    var pokemons = this.state.pokemons;
+    var pokemons = this.state.pokemons,
+        lazy = '';
 
     if (!this.state.loaded) {
       return <LoadingScreen />
+    }
+
+    if (!this.state.finished) {
+      lazy = <Lazy onReady={ this.loadPokemons } />
     }
 
     return(
@@ -37,6 +57,7 @@ const List = React.createClass({
             );
           })
         }
+        { lazy }
       </div>
     );
     /* jshint ignore:end */
