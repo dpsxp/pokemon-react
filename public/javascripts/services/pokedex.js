@@ -15,7 +15,7 @@ var PokedexService = {
         var pokemons = pokemon
           .slice(start, end)
           .map(pokemonFactory);
-        return { pokemons: pokemons, finished: end >= pokemon.length };
+        return { pokemons: pokemons, total: pokemon.length };
       });
   }
 };

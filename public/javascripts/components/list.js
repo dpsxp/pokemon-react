@@ -21,12 +21,13 @@ const List = React.createClass({
         oldData = this.state.pokemons;
 
     PokedexService.get(page, limit)
-      .then(({ pokemons, finished }) => {
+      .then(({ pokemons, total }) => {
+        let newData = oldData.concat(pokemons);
 
         this.setState({
-          pokemons: oldData.concat(pokemons),
+          pokemons: newData,
           page: page + 1,
-          finished: finished
+          finished: newData.length === total
         });
       });
   },
