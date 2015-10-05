@@ -4,6 +4,7 @@ import PokedexService from '../services/pokedex';
 import ListItem from './list_item';
 import LoadingScreen from './loading_screen';
 import Lazy from './lazy';
+import Spinner from './spinner';
 import { flatten } from 'lodash';
 
 const List = React.createClass({
@@ -24,7 +25,7 @@ const List = React.createClass({
           pokemons: flatten(oldData.concat(pokemons.slice(offset, limit))),
           page: page + 1,
           loaded: true,
-          finished: (page * 50) >= pokemons.length
+          finished: offset >= pokemons.length
         });
       });
   },
@@ -43,7 +44,12 @@ const List = React.createClass({
     }
 
     if (!this.state.finished) {
-      lazy = <Lazy onReady={ this.loadPokemons } />
+      lazy = (
+        <div className="load-more">
+          <Spinner />
+          <Lazy onReady={ this.loadPokemons } />
+        </div>
+      );
     }
 
     return(
