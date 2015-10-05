@@ -21,7 +21,7 @@ const ListItem = React.createClass({
 
           <div className="mdl-card__actions mdl-card--border">
             <Link className="mdl-button mdl-button--colored" to={`/pokemon/${pokemon.id}`}>
-              Read more
+              { pokemon.name }
             </Link>
           </div>
         </div>
