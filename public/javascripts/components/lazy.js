@@ -12,6 +12,10 @@ const Lazy = React.createClass({
     return { loaded: false };
   },
 
+  on() {
+    document.body.addEventListener('scroll', this.check, true);
+  },
+
   componentDidMount() {
     this.check = throttle(() => {
       var node = this.getDOMNode(),
@@ -24,13 +28,17 @@ const Lazy = React.createClass({
     }, this.props.time || 500);
 
     this.check();
+    this.on();
+  },
 
-    document.body.addEventListener('scroll', this.check, true);
+  componentDidUpdate() {
+    this.off();
+    this.on();
   },
 
   ready() {
-    this.setState({ loaded: true });
     this.off();
+    this.setState({ loaded: true });
 
     if (typeof this.props.onReady === 'function') {
       this.props.onReady();
