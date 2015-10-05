@@ -4,7 +4,7 @@ import Spinner from './spinner';
 import { throttle } from 'lodash';
 
 const Lazy = React.createClass({
-  getInitialProps() {
+  getDefaultProps() {
     return { onReady: function() {}, time: 500 };
   },
 
@@ -25,7 +25,7 @@ const Lazy = React.createClass({
         this.ready();
       }
 
-    }, this.props.time || 500);
+    }, this.props.time);
 
     this.check();
     this.on();
@@ -39,10 +39,7 @@ const Lazy = React.createClass({
   ready() {
     this.off();
     this.setState({ loaded: true });
-
-    if (typeof this.props.onReady === 'function') {
-      this.props.onReady();
-    }
+    this.props.onReady();
   },
 
   off() {
