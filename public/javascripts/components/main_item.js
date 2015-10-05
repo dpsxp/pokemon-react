@@ -1,29 +1,36 @@
+// libs
 import React from 'react';
+
+// Services
 import PokemonService from '../services/pokemon';
-import ListItem from './list_item';
-import Ability from './ability';
+
+// Model
+import PokemonModel from '../models/pokemon';
+
+// Components
 import Description from './description';
 import Sprites from './sprites';
-import PokemonModel from '../models/pokemon';
+import Evolutions from './evolutions';
+import LoadingScreen from './loading_screen';
+import ImageItem from './image_item';
+
 
 const MainItem = React.createClass({
   getInitialState() {
     return {
-      pokemon: new PokemonModel()
+      pokemon: new PokemonModel(),
+      loaded: false
     };
   },
 
   loadPokemon(id) {
-    var _this = this;
-
     return PokemonService.get(id)
-      .then(function(pokemon) {
-        _this.setState({ pokemon: pokemon });
-      });
+      .then((pokemon) => this.setState({ pokemon: pokemon, loaded: true }));
   },
 
   componentWillReceiveProps(nextProps) {
     this.loadPokemon(nextProps.params.id);
+    this.setState({ loaded: false });
   },
 
   componentDidMount() {
@@ -33,56 +40,40 @@ const MainItem = React.createClass({
   render() {
     /* jshint ignore: start */
     var pokemon = this.state.pokemon,
-        createItem = function(evo) {
-          evo.name = evo.to;
-          return <ListItem pokemon={evo} />
-        },
-
-        abilityItem = function(abi) {
-          return <Ability ability={abi} />
-        },
-
         descriptionItem = function() {
           if (pokemon.descriptions.length > 0) {
             return <Description description={ pokemon.descriptions[0] } />
           }
-        },
-
-        imageItem = function () {
-          return <Sprites sprites={ pokemon.sprites } />
-        },
-
-        shouldRender = function(prop, cb) {
-          if (pokemon[prop].length == 0) {
-            return '';
-          } else {
-            var itemName = prop[0].toUpperCase() + prop.slice(1);
-
-            return(
-              <div>
-                <p>{ itemName }</p>
-                { pokemon[prop].map(cb) }
-              </div>
-            );
-          }
         };
 
+    if (!this.state.loaded) {
+      return <LoadingScreen />
+    }
 
     return(
-      <div class="main-item">
-        <h2>{pokemon.name}</h2>
+      <div className="mdl-grid">
+        <div className="mdl-cell mdl-cell--12-col">
+          <h2>{ pokemon.name }</h2>
+        </div>
 
-        { descriptionItem() }
-        { imageItem() }
+        <div className="mdl-cell mdl-cell--8-col">
+          { descriptionItem() }
+          <h3>Status</h3>
+          <ul>
+            <li>HP: {pokemon.hp}</li>
+            <li>Attack: {pokemon.attack}</li>
+            <li>Defense: {pokemon.defense}</li>
+            <li>Speed: {pokemon.speed}</li>
+          </ul>
+        </div>
 
-        <p>HP: {pokemon.hp}</p>
-        <p>Attack: {pokemon.attack}</p>
-        <p>Defense: {pokemon.defense}</p>
-        <p>Speed: {pokemon.speed}</p>
+        <div className="mdl-cell mdl-cell--2-col">
+          <ImageItem src={ pokemon.thumbUrl() } alt={pokemon.name} />
+        </div>
 
-
-        { shouldRender('abilities', abilityItem) }
-        { shouldRender('evolutions', createItem) }
+        <div className="mdl-cell mdl-cell--12-col">
+          <Evolutions evolutions={ pokemon.evolutions } />
+        </div>
 
       </div>
     );

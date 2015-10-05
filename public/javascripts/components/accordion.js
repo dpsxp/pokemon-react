@@ -34,13 +34,14 @@ const Accordion = React.createClass({
     }
 
     return(
-      <div className={"accordion " + className}>
-        <p hidden={ this.isHidden() ? "hidden" : "" } className="accordion-info">
-          { this.props.message }
-        </p>
-        <a href="#" className="accordion-toggle" onClick={this.toggle}>
+      <div className={`${className}`}>
+        <div hidden={ this.isHidden() ? "hidden" : "" }>
+          { this.props.children }
+        </div>
+
+        <button className="mdl-button mdl-button--primary mdl-js-button" onClick={this.toggle}>
           { message }
-        </a>
+        </button>
       </div>
     );
     /* jshint ignore: end */

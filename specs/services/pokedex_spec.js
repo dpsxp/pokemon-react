@@ -13,22 +13,21 @@ describe('PokedexService', function() {
   describe('#get', function() {
     beforeEach(function() {
       this.server = sinon.fakeServer.create();
+      this.response = require('../fixtures/pokedex.json');
+      this.server.respondWith(
+        'GET',
+        PokedexService.BASE_URL,
+        [200, { 'Content-Type' : 'application/json' }, JSON.stringify(this.response)]
+      );
     });
 
     afterEach(function() {
       this.server.restore();
     });
 
-    it('returns a promise filled with a list of Pokemon models', function(done) {
-      var response = require('../fixtures/pokedex.json');
-
-      this.server.respondWith(
-        'GET',
-        PokedexService.BASE_URL,
-        [200, { 'Content-Type' : 'application/json' }, JSON.stringify(response)]
-      );
-
-      PokedexService.get().then(function(pokemons) {
+    it('returns a promise filled with a object with list of Pokemon models and the total pokemons in the server', function(done) {
+      PokedexService.get().then(({ pokemons, total }) => {
+        expect(total).toEqual(this.response.pokemon.length);
         pokemons.forEach(function(pokemon) {
           expect(pokemon).toEqual(jasmine.any(PokemonModel));
         });
@@ -36,6 +35,13 @@ describe('PokedexService', function() {
       });
 
       this.server.respond();
+    });
+
+    it('does pagination with a default limit to 50', function(done) {
+      PokedexService.get().then(function({ pokemons }) {
+        expect(pokemons.length).toEqual(50);
+        done();
+      });
     });
   });
 });
