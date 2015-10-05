@@ -4,30 +4,45 @@ import Spinner from './spinner';
 import { throttle } from 'lodash';
 
 const Lazy = React.createClass({
-  getInitialState: function() {
+  getInitialProps() {
+    return { onReady: function() {}, time: 500 };
+  },
+
+  getInitialState() {
     return { loaded: false };
   },
 
-  componentDidMount: function() {
-    this.check();
-  },
-
-  check() {
-    var evt = 'scroll';
-
-    var fn = throttle(() => {
+  componentDidMount() {
+    this.check = throttle(() => {
       var node = this.getDOMNode(),
           top = node.getBoundingClientRect().top + 100;
 
       if (top < window.screen.height) {
-        document.body.removeEventListener(evt, fn);
-        this.setState({ loaded: true });
+        this.ready();
       }
-    }, 300);
 
-    document.body.addEventListener(evt, fn, true);
+    }, this.props.time || 500);
 
-    fn();
+    this.check();
+
+    document.body.addEventListener('scroll', this.check, true);
+  },
+
+  ready() {
+    this.setState({ loaded: true });
+    this.off();
+
+    if (typeof this.props.onReady === 'function') {
+      this.props.onReady();
+    }
+  },
+
+  off() {
+    document.body.removeEventListener('scroll', this.check, true);
+  },
+
+  componentWillUnmount() {
+    this.off();
   },
 
   render() {
