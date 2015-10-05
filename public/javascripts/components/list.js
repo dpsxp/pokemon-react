@@ -5,27 +5,28 @@ import ListItem from './list_item';
 import LoadingScreen from './loading_screen';
 import Lazy from './lazy';
 import Spinner from './spinner';
-import { flatten } from 'lodash';
 
 const List = React.createClass({
   getInitialState() {
-    return { pokemons: [], page: 0 };
+    return { pokemons: [], page: 0, finished: false };
+  },
+
+  getDefaultProps() {
+    return { limit: 20 };
   },
 
   loadPokemons() {
+    var page = this.state.page,
+        limit = this.props.limit,
+        oldData = this.state.pokemons;
 
-    PokedexService.get()
-      .then((pokemons) => {
-        var page = this.state.page,
-            oldData = this.state.pokemons,
-            offset = page * 50,
-            limit = (page * 50) + 50;
+    PokedexService.get(page, limit)
+      .then(({ pokemons, finished }) => {
 
         this.setState({
-          pokemons: flatten(oldData.concat(pokemons.slice(offset, limit))),
+          pokemons: oldData.concat(pokemons),
           page: page + 1,
-          loaded: true,
-          finished: offset >= pokemons.length
+          finished: finished
         });
       });
   },
@@ -38,10 +39,6 @@ const List = React.createClass({
     /* jshint ignore:start */
     var pokemons = this.state.pokemons,
         lazy = '';
-
-    if (!this.state.loaded) {
-      return <LoadingScreen />
-    }
 
     if (!this.state.finished) {
       lazy = (
