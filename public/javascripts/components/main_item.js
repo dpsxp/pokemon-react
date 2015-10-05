@@ -12,6 +12,7 @@ import Description from './description';
 import Sprites from './sprites';
 import Evolutions from './evolutions';
 import LoadingScreen from './loading_screen';
+import ImageItem from './image_item';
 
 
 const MainItem = React.createClass({
@@ -67,7 +68,7 @@ const MainItem = React.createClass({
         </div>
 
         <div className="mdl-cell mdl-cell--2-col">
-          <Sprites sprites={ pokemon.sprites } />
+          <ImageItem src={ pokemon.thumbUrl() } alt={pokemon.name} />
         </div>
 
         <div className="mdl-cell mdl-cell--12-col">
