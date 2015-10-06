@@ -19,6 +19,8 @@ function dispatchAction({ pokemons, total}) {
   action.total = total;
 
   dispatcher.dispatch(action);
+
+  return { pokemons: pokemons, total: total };
 }
 
 var PokedexService = {

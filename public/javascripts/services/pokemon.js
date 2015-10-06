@@ -12,6 +12,7 @@ var PokemonService = {
       .then(pokemonFactory)
       .then((pokemon) => {
         dispatcher.dispatch({ type: 'pokemon/loaded', pokemon: pokemon });
+        return pokemon;
       });
   }
 };
