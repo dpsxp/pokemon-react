@@ -24,7 +24,11 @@ const List = React.createClass({
   },
 
   componentWillMount() {
-    PokedexStore.addListener(this._onLoad);
+    this.token = PokedexStore.addListener(this._onLoad);
+  },
+
+  componentWillUnmount() {
+    this.token.remove(this._onLoad);
   },
 
   render() {

@@ -4,8 +4,9 @@ import React from 'react';
 // Services
 import PokemonService from '../services/pokemon';
 
-// Model
-import PokemonModel from '../models/pokemon';
+// Stores
+import PokemonStore from '../stores/pokemon';
+import { dispatcher } from '../stores/pokedex';
 
 // Components
 import Description from './description';
@@ -18,23 +19,29 @@ import ImageItem from './image_item';
 const MainItem = React.createClass({
   getInitialState() {
     return {
-      pokemon: new PokemonModel(),
+      pokemon: PokemonStore.getState(),
       loaded: false
     };
   },
 
-  loadPokemon(id) {
-    return PokemonService.get(id)
-      .then((pokemon) => this.setState({ pokemon: pokemon, loaded: true }));
+  _onLoad() {
+    this.setState({
+      pokemon: PokemonStore.getState(),
+      loaded: true
+    });
   },
 
   componentWillReceiveProps(nextProps) {
-    this.loadPokemon(nextProps.params.id);
-    this.setState({ loaded: false });
+    PokemonStore.loadData(nextProps.params.id);
   },
 
   componentDidMount() {
-    this.loadPokemon(this.props.params.id);
+    this.dispatcherToken = PokemonStore.addListener(this._onLoad);
+    PokemonStore.loadData(this.props.params.id);
+  },
+
+  componentWillUnmount() {
+    this.dispatcherToken.remove(this._onLoad);
   },
 
   render() {

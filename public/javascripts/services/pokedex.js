@@ -1,7 +1,7 @@
 import BaseService from './base';
 import { partial, defaults } from 'lodash';
 import { pokemonFactory } from '../models/pokemon';
-import { dispatcher } from '../stores/pokedex';
+import dispatcher from '../dispatcher';
 import PokedexActions from '../actions/pokedex_actions';
 
 function parsePokemons(start, end, { pokemon }) {

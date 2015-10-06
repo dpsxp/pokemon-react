@@ -1,6 +1,7 @@
 // Libs
 import { ReduceStore } from 'flux/utils';
-import { Dispatcher } from 'flux';
+
+import dispatcher from '../dispatcher';
 
 // Services
 import PokedexService from '../services/pokedex';
@@ -41,6 +42,5 @@ class PokedexStore extends ReduceStore {
   }
 }
 
-export var dispatcher = new Dispatcher();
 const instance = new PokedexStore(dispatcher);
 export default instance;
