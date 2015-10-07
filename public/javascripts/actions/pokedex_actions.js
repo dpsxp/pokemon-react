@@ -1,7 +1,7 @@
 
 const PokedexActions = {
   FETCHED: {
-    type: 'fetched',
+    type: 'pokedex/fetched',
     pokemons: [],
     total: 0
   }

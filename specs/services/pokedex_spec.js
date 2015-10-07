@@ -1,6 +1,7 @@
 import PokedexService from '../../public/javascripts/services/pokedex';
 import BaseService from '../../public/javascripts/services/base';
 import PokemonModel from '../../public/javascripts/models/pokemon';
+import dispatcher from '../../public/javascripts/dispatcher';
 
 describe('PokedexService', function() {
   describe('#BASE_URL', function() {
@@ -23,6 +24,22 @@ describe('PokedexService', function() {
 
     afterEach(function() {
       this.server.restore();
+    });
+
+    it('dispatches a fetched action', function(done) {
+      var spy = spyOn(dispatcher, 'dispatch');
+
+      PokedexService.get().then( ({ pokemons, total }) => {
+        expect(spy).toHaveBeenCalledWith({
+          type: 'pokedex/fetched',
+          pokemons: pokemons,
+          total: total
+        });
+
+        done();
+      });
+
+      this.server.respond();
     });
 
     it('returns a promise filled with a object with list of Pokemon models and the total pokemons in the server', function(done) {

@@ -23,7 +23,7 @@ class PokedexStore extends ReduceStore {
 
   reduce(state, action) {
     switch(action.type) {
-      case 'fetched':
+      case 'pokedex/fetched':
         var newPokemons = state.pokemons.concat(action.pokemons);
 
         return {
