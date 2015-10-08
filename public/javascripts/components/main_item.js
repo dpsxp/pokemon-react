@@ -1,5 +1,7 @@
 // libs
 import React from 'react';
+import ReactFireMixin from 'reactfire';
+import Firebase from 'firebase';
 
 // Services
 import PokemonService from '../services/pokemon';
@@ -9,18 +11,24 @@ import PokemonStore from '../stores/pokemon';
 import { dispatcher } from '../stores/pokedex';
 
 // Components
+import CommentsForm from './comments_form';
+import CommentsList from './comments_list';
 import Description from './description';
 import Sprites from './sprites';
 import Evolutions from './evolutions';
 import LoadingScreen from './loading_screen';
 import ImageItem from './image_item';
 
+const FIREBASE_URL = 'https://luminous-heat-8041.firebaseio.com/pokedex';
 
 const MainItem = React.createClass({
+  mixins: [ReactFireMixin],
+
   getInitialState() {
     return {
       pokemon: PokemonStore.getState(),
-      loaded: false
+      loaded: false,
+      comments: []
     };
   },
 
@@ -29,14 +37,24 @@ const MainItem = React.createClass({
       pokemon: PokemonStore.getState(),
       loaded: true
     });
+
+  },
+
+  _bindFirebase(id) {
+    this.bindAsArray(new Firebase(FIREBASE_URL + '/' + id ), 'comments');
   },
 
   componentWillReceiveProps(nextProps) {
+    this.unbind('comments');
+
+    this._bindFirebase(nextProps.params.id);
+
     PokemonStore.loadData(nextProps.params.id);
   },
 
-  componentDidMount() {
+  componentWillMount() {
     this.dispatcherToken = PokemonStore.addListener(this._onLoad);
+    this._bindFirebase(this.props.params.id);
     PokemonStore.loadData(this.props.params.id);
   },
 
@@ -44,17 +62,36 @@ const MainItem = React.createClass({
     this.dispatcherToken.remove(this._onLoad);
   },
 
+  handleComment(evt, data) {
+    var comment =  data;
+    this.firebaseRefs.comments.push(comment);
+  },
+
   render() {
     /* jshint ignore: start */
-    var pokemon = this.state.pokemon,
-        descriptionItem = function() {
-          if (pokemon.descriptions.length > 0) {
-            return <Description description={ pokemon.descriptions[0] } />
-          }
-        };
-
     if (!this.state.loaded) {
       return <LoadingScreen />
+    }
+
+    var pokemon = this.state.pokemon,
+        comments = this.state.comments;
+
+    var descriptionItem = function() {
+      if (pokemon.descriptions.length > 0) {
+        return <Description description={ pokemon.descriptions[0] } />
+      }
+    };
+
+    var commentsList = function() {
+      if (comments.length === 0) {
+        return '';
+      }
+
+      return (
+        <div className="mdl-cell mdl-cell--12-col">
+          <CommentsList comments={ comments } />
+        </div>
+      );
     }
 
     return(
@@ -82,6 +119,12 @@ const MainItem = React.createClass({
           <Evolutions evolutions={ pokemon.evolutions } />
         </div>
 
+        { commentsList() }
+
+        <div className="mdl-cell mdl-cell--12-col">
+          <h4>Leave a comment</h4>
+          <CommentsForm onSubmit={ this.handleComment } />
+        </div>
       </div>
     );
     /* jshint ignore: end */
