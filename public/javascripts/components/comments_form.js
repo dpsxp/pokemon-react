@@ -13,6 +13,7 @@ const CommentsForm = React.createClass({
     };
 
     this.props.onSubmit(evt, data);
+    form.reset();
   },
 
   render() {
