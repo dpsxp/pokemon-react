@@ -69,16 +69,29 @@ const MainItem = React.createClass({
 
   render() {
     /* jshint ignore: start */
-    var pokemon = this.state.pokemon,
-        comments = this.state.comments,
-        descriptionItem = function() {
-          if (pokemon.descriptions.length > 0) {
-            return <Description description={ pokemon.descriptions[0] } />
-          }
-        };
-
     if (!this.state.loaded) {
       return <LoadingScreen />
+    }
+
+    var pokemon = this.state.pokemon,
+        comments = this.state.comments;
+
+    var descriptionItem = function() {
+      if (pokemon.descriptions.length > 0) {
+        return <Description description={ pokemon.descriptions[0] } />
+      }
+    };
+
+    var commentsList = function() {
+      if (comments.length === 0) {
+        return '';
+      }
+
+      return (
+        <div className="mdl-cell mdl-cell--12-col">
+          <CommentsList comments={ comments } />
+        </div>
+      );
     }
 
     return(
@@ -106,11 +119,10 @@ const MainItem = React.createClass({
           <Evolutions evolutions={ pokemon.evolutions } />
         </div>
 
-        <div className="mdl-cell mdl-cell--12-col">
-          <CommentsList comments={ comments } />
-        </div>
+        { commentsList() }
 
         <div className="mdl-cell mdl-cell--12-col">
+          <h4>Leave a comment</h4>
           <CommentsForm onSubmit={ this.handleComment } />
         </div>
       </div>

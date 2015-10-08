@@ -19,10 +19,6 @@ const CommentsForm = React.createClass({
     /* jshint ignore: start */
     return(
       <div>
-        <div>
-          <h4>Leave a message</h4>
-        </div>
-
         <form onSubmit={ this.onSubmit } action="#" className="mdl-cell mdl-cell-12-col">
           <div >
             <div className="mdl-textfield mdl-js-textfield">
