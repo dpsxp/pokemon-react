@@ -1,51 +1,45 @@
 /* jshint esnext: true */
 import React from 'react';
-import PokedexService from '../services/pokedex';
 import ListItem from './list_item';
 import LoadingScreen from './loading_screen';
 import Lazy from './lazy';
 import Spinner from './spinner';
+import PokedexStore, { dispatcher } from '../stores/pokedex';
 
 const List = React.createClass({
   getInitialState() {
-    return { pokemons: [], page: 0, finished: false };
+    return PokedexStore.getState();
   },
 
   getDefaultProps() {
     return { limit: 20 };
   },
 
-  loadPokemons() {
-    var page = this.state.page,
-        limit = this.props.limit,
-        oldData = this.state.pokemons;
-
-    PokedexService.get(page, limit)
-      .then(({ pokemons, total }) => {
-        let newData = oldData.concat(pokemons);
-
-        this.setState({
-          pokemons: newData,
-          page: page + 1,
-          finished: newData.length === total
-        });
-      });
+  _onLoad() {
+    this.setState(PokedexStore.getState());
   },
 
-  componentDidMount() {
-    this.loadPokemons();
+  _loadMore() {
+    PokedexStore.loadData(this.props.limit);
+  },
+
+  componentWillMount() {
+    this.token = PokedexStore.addListener(this._onLoad);
+  },
+
+  componentWillUnmount() {
+    this.token.remove(this._onLoad);
   },
 
   render() {
     /* jshint ignore:start */
-    var pokemons = this.state.pokemons,
-        lazy = '';
+    var pokemons = this.state.pokemons, lazy = '';
 
     if (!this.state.finished) {
       lazy = (
         <div className="load-more">
           <Spinner />
-          <Lazy onReady={ this.loadPokemons } />
+          <Lazy onReady={ this._loadMore } />
         </div>
       );
     }

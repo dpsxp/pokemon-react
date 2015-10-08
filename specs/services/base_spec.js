@@ -103,10 +103,11 @@ describe('BaseService', function() {
 
   describe('#get', function() {
     it('makes a http request and returns a promise', function() {
+      spyOn(BaseService, 'doRequest');
+
       var path = `${BaseService.BASE_URL}/pokemons`,
           result = BaseService.get(path, false);
 
-      spyOn(BaseService, 'doRequest');
       expect(result).toEqual(jasmine.any(Promise));
     });
   });
