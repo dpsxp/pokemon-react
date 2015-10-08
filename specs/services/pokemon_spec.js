@@ -1,6 +1,7 @@
 import PokemonService from '../../public/javascripts/services/pokemon';
 import BaseService from '../../public/javascripts/services/base';
 import PokemonModel from '../../public/javascripts/models/pokemon';
+import dispatcher from '../../public/javascripts/dispatcher';
 
 describe('PokemonService', function() {
   describe('#BASE_URL', function() {
@@ -12,25 +13,41 @@ describe('PokemonService', function() {
 
   describe('#get', function() {
     beforeEach(function() {
-      this.server = sinon.fakeServer.create();
+      this.server   = sinon.fakeServer.create();
+      this.response = require('../fixtures/pokemon.json');
+      this.id       = 1;
+      var path      = `${PokemonService.BASE_URL}/${this.id}`;
+
+      this.server.respondWith(
+        'GET',
+        path,
+        [200, { 'Content-Type' : 'application/json' }, JSON.stringify(this.response)]
+      );
+
     });
 
     afterEach(function() {
       this.server.restore();
     });
 
+    it('dispatches a pokemon/loaded action', function(done) {
+      var spy = spyOn(dispatcher, 'dispatch');
+
+      PokemonService.get(this.id).then( (pokemon) => {
+        expect(spy).toHaveBeenCalledWith({
+          type: 'pokemon/loaded',
+          pokemon: pokemon
+        });
+
+        done();
+      });
+
+      this.server.respond();
+    });
+
     it('returns a promise filled with a Pokemon model', function(done) {
-      var response = require('../fixtures/pokemon.json'),
-          id       = 1,
-          path     = `${PokemonService.BASE_URL}/${id}`;
 
-      this.server.respondWith(
-        'GET',
-        path,
-        [200, { 'Content-Type' : 'application/json' }, JSON.stringify(response)]
-      );
-
-      PokemonService.get(id).then(function(pokemon) {
+      PokemonService.get(this.id).then(function(pokemon) {
         expect(pokemon).toEqual(jasmine.any(PokemonModel));
         done();
       });

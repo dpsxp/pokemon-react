@@ -1,53 +1,97 @@
 // libs
 import React from 'react';
+import ReactFireMixin from 'reactfire';
+import Firebase from 'firebase';
 
 // Services
 import PokemonService from '../services/pokemon';
 
-// Model
-import PokemonModel from '../models/pokemon';
+// Stores
+import PokemonStore from '../stores/pokemon';
+import { dispatcher } from '../stores/pokedex';
 
 // Components
+import CommentsForm from './comments_form';
+import CommentsList from './comments_list';
 import Description from './description';
 import Sprites from './sprites';
 import Evolutions from './evolutions';
 import LoadingScreen from './loading_screen';
 import ImageItem from './image_item';
 
+const FIREBASE_URL = 'https://luminous-heat-8041.firebaseio.com/pokedex';
 
 const MainItem = React.createClass({
+  mixins: [ReactFireMixin],
+
   getInitialState() {
     return {
-      pokemon: new PokemonModel(),
-      loaded: false
+      pokemon: PokemonStore.getState(),
+      loaded: false,
+      comments: []
     };
   },
 
-  loadPokemon(id) {
-    return PokemonService.get(id)
-      .then((pokemon) => this.setState({ pokemon: pokemon, loaded: true }));
+  _onLoad() {
+    this.setState({
+      pokemon: PokemonStore.getState(),
+      loaded: true
+    });
+
+  },
+
+  _bindFirebase(id) {
+    this.bindAsArray(new Firebase(FIREBASE_URL + '/' + id ), 'comments');
   },
 
   componentWillReceiveProps(nextProps) {
-    this.loadPokemon(nextProps.params.id);
-    this.setState({ loaded: false });
+    this.unbind('comments');
+
+    this._bindFirebase(nextProps.params.id);
+
+    PokemonStore.loadData(nextProps.params.id);
   },
 
-  componentDidMount() {
-    this.loadPokemon(this.props.params.id);
+  componentWillMount() {
+    this.dispatcherToken = PokemonStore.addListener(this._onLoad);
+    this._bindFirebase(this.props.params.id);
+    PokemonStore.loadData(this.props.params.id);
+  },
+
+  componentWillUnmount() {
+    this.dispatcherToken.remove(this._onLoad);
+  },
+
+  handleComment(evt, data) {
+    var comment =  data;
+    this.firebaseRefs.comments.push(comment);
   },
 
   render() {
     /* jshint ignore: start */
-    var pokemon = this.state.pokemon,
-        descriptionItem = function() {
-          if (pokemon.descriptions.length > 0) {
-            return <Description description={ pokemon.descriptions[0] } />
-          }
-        };
-
     if (!this.state.loaded) {
       return <LoadingScreen />
+    }
+
+    var pokemon = this.state.pokemon,
+        comments = this.state.comments;
+
+    var descriptionItem = function() {
+      if (pokemon.descriptions.length > 0) {
+        return <Description description={ pokemon.descriptions[0] } />
+      }
+    };
+
+    var commentsList = function() {
+      if (comments.length === 0) {
+        return '';
+      }
+
+      return (
+        <div className="mdl-cell mdl-cell--12-col">
+          <CommentsList comments={ comments } />
+        </div>
+      );
     }
 
     return(
@@ -75,6 +119,12 @@ const MainItem = React.createClass({
           <Evolutions evolutions={ pokemon.evolutions } />
         </div>
 
+        { commentsList() }
+
+        <div className="mdl-cell mdl-cell--12-col">
+          <h4>Leave a comment</h4>
+          <CommentsForm onSubmit={ this.handleComment } />
+        </div>
       </div>
     );
     /* jshint ignore: end */
