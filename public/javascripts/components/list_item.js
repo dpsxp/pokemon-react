@@ -15,7 +15,9 @@ const ListItem = React.createClass({
         <div className="mdl-card mdl-shadow--8dp mdl-card--border">
           <div className="mdl-card__title mdl-card--expand">
             <Lazy>
-              <ImageItem src={pokemon.thumbUrl()} />
+              <Link to={`/pokemon/${pokemon.id}`}>
+                <ImageItem src={pokemon.thumbUrl()} />
+              </Link>
             </Lazy>
           </div>
 

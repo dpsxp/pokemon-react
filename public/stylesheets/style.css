@@ -19,3 +19,7 @@
     box-sizing: border-box;
 }
 
+
+.mdl-badge[data-badge]:after {
+    top: 0;
+}

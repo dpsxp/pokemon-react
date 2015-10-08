@@ -2,17 +2,45 @@ import React from 'react';
 import CommentsList from './comments_list';
 
 const CommentsForm = React.createClass({
+  invalidFields(data) {
+    return Object.keys(data).filter( (key) => data[key] === '' );
+  },
+
+  validFields(data) {
+    return Object.keys(data).filter( (key) => data[key] !== '' );
+  },
+
+  validate(invalidFields, form) {
+    invalidFields.forEach((field) => {
+      form[field].parentNode.classList.add('is-invalid');
+    });
+  },
+
+  clean(fields) {
+    fields.forEach((field) => {
+      form[field].parentNode.classList.remove('is-invalid');
+    });
+  },
+
   onSubmit(evt) {
     evt.preventDefault();
-    var form = evt.target;
+    var form = evt.target,
+        data =  {
+          author  : form.author.value.trim(),
+          email   : form.email.value.trim(),
+          message : form.message.value.trim()
+        };
 
-    var data =  {
-      author: form.author.value,
-      email: form.email.value,
-      message: form.message.value
-    };
+    var invalidFields = this.invalidFields(data),
+        validFields   = this.validFields(data);
 
-    this.props.onSubmit(evt, data);
+    if (invalidFields.length > 0) {
+      this.validate(invalidFields, form);
+    } else {
+      this.clean(validFields);
+      this.props.onSubmit(evt, data);
+      form.reset();
+    }
   },
 
   render() {
@@ -22,20 +50,20 @@ const CommentsForm = React.createClass({
         <form onSubmit={ this.onSubmit } action="#" className="mdl-cell mdl-cell-12-col">
           <div >
             <div className="mdl-textfield mdl-js-textfield">
-              <input className="mdl-textfield__input" type="text" name="author"  />
-              <label className="mdl-textfield__label" for="sample1">Nome...</label>
+              <input className="mdl-textfield__input" type="text" name="author" />
+              <label className="mdl-textfield__label" for="author">Nome...</label>
             </div>
           </div>
           <div >
             <div className="mdl-textfield mdl-js-textfield">
               <input className="mdl-textfield__input" type="email" name="email" />
-              <label className="mdl-textfield__label" for="sample1">Email...</label>
+              <label className="mdl-textfield__label" for="email">Email...</label>
             </div>
           </div>
           <div >
             <div className="mdl-textfield mdl-js-textfield">
               <textarea className="mdl-textfield__input" type="text" name="message" rows= "3" ></textarea>
-              <label className="mdl-textfield__label" for="sample1">Comentário...</label>
+              <label className="mdl-textfield__label" for="message">Comentário...</label>
             </div>
           </div>
 
