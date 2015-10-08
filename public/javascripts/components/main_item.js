@@ -11,7 +11,7 @@ import PokemonStore from '../stores/pokemon';
 import { dispatcher } from '../stores/pokedex';
 
 // Components
-import Form from './form';
+import CommentsForm from './comments_form';
 import CommentsList from './comments_list';
 import Description from './description';
 import Sprites from './sprites';
@@ -111,7 +111,7 @@ const MainItem = React.createClass({
         </div>
 
         <div className="mdl-cell mdl-cell--12-col">
-          <Form onSubmit={ this.handleComment } />
+          <CommentsForm onSubmit={ this.handleComment } />
         </div>
       </div>
     );

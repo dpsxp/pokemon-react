@@ -1,7 +1,7 @@
 import React from 'react';
 import CommentsList from './comments_list';
 
-const Form = React.createClass({
+const CommentsForm = React.createClass({
   onSubmit(evt) {
     evt.preventDefault();
     var form = evt.target;
@@ -53,4 +53,4 @@ const Form = React.createClass({
   }
 });
 
-export default Form;
+export default CommentsForm;
