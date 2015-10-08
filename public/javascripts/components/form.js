@@ -19,24 +19,24 @@ const Form = React.createClass({
     /* jshint ignore: start */
     return(
       <div>
-        <div className="mdl-cell mdl-cell--12-col">
+        <div>
           <h4>Leave a message</h4>
         </div>
 
         <form onSubmit={ this.onSubmit } action="#" className="mdl-cell mdl-cell-12-col">
-          <div className="mdl-cell mdl-cell--12-col">
+          <div >
             <div className="mdl-textfield mdl-js-textfield">
               <input className="mdl-textfield__input" type="text" name="author"  />
               <label className="mdl-textfield__label" for="sample1">Nome...</label>
             </div>
           </div>
-          <div className="mdl-cell mdl-cell--12-col">
+          <div >
             <div className="mdl-textfield mdl-js-textfield">
               <input className="mdl-textfield__input" type="email" name="email" />
               <label className="mdl-textfield__label" for="sample1">Email...</label>
             </div>
           </div>
-          <div className="mdl-cell mdl-cell--12-col">
+          <div >
             <div className="mdl-textfield mdl-js-textfield">
               <textarea className="mdl-textfield__input" type="text" name="message" rows= "3" ></textarea>
               <label className="mdl-textfield__label" for="sample1">Comentário...</label>
