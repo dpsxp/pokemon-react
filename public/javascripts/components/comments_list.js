@@ -7,7 +7,7 @@ const CommentsList = React.createClass({
     var comments = this.props.comments;
 
     return(
-      <div>
+      <div className="comments-box-js">
         <h3>
           <span className="mdl-badge" data-badge={ comments.length }>Comments</span>
         </h3>

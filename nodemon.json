@@ -1,4 +1,4 @@
 {
   "verbose": false,
-  "ignore": ["public/*"]
+  "ignore": ["public/*", "features/*", "nightwatch.json"]
 }

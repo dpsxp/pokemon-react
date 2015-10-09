@@ -12,14 +12,20 @@ const Evolutions = React.createClass({
     }
 
     var createItem = function(evo) {
-      return <ListItem pokemon={ evo } />
+      return(
+        <div className="mdl-cell mdl-cell--4-col">
+          <ListItem pokemon={ evo } />
+        </div>
+      );
     }
 
     return(
       <div>
         <h3>Evolutions</h3>
         <Accordion>
-          { evolutions.map(createItem) }
+          <div className="mdl-grid">
+            { evolutions.map(createItem) }
+          </div>
         </Accordion>
       </div>
     );

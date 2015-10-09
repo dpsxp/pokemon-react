@@ -1,4 +1,6 @@
 import Pokemon from '../../public/javascripts/models/pokemon';
+import BaseService from  '../../public/javascripts/services/base';
+import url from 'url';
 
 describe('Pokemon', function() {
   describe('constructor', function() {
@@ -44,7 +46,15 @@ describe('Pokemon', function() {
       it('descriptions', function() {
         expect(pokemon.descriptions).toEqual([]);
       });
+    });
+  });
 
+  describe('#thumbUrl', function() {
+    it('returns the pokemon thumb url based on the pokemon id', function() {
+      var pokemon = new Pokemon({ id: 32 }),
+          thumbUrl = url.resolve(BaseService.BASE_URL, `/media/img/32.png`);
+
+      expect(pokemon.thumbUrl()).toEqual(thumbUrl);
     });
   });
 });

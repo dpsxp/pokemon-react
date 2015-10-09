@@ -12,7 +12,7 @@ const ListItem = React.createClass({
 
     /* jshint ignore:start */
     return(
-        <div className="mdl-card mdl-shadow--8dp mdl-card--border">
+        <div className="pokemon-item-js mdl-card mdl-shadow--8dp mdl-card--border">
           <div className="mdl-card__title mdl-card--expand">
             <Lazy>
               <Link to={`/pokemon/${pokemon.id}`}>

@@ -16,7 +16,7 @@ const CommentsForm = React.createClass({
     });
   },
 
-  clean(fields) {
+  clean(fields, form) {
     fields.forEach((field) => {
       form[field].parentNode.classList.remove('is-invalid');
     });
@@ -37,7 +37,7 @@ const CommentsForm = React.createClass({
     if (invalidFields.length > 0) {
       this.validate(invalidFields, form);
     } else {
-      this.clean(validFields);
+      this.clean(validFields, form);
       this.props.onSubmit(evt, data);
       form.reset();
     }
@@ -47,7 +47,8 @@ const CommentsForm = React.createClass({
     /* jshint ignore: start */
     return(
       <div>
-        <form onSubmit={ this.onSubmit } action="#" className="mdl-cell mdl-cell-12-col">
+        <form onSubmit={ this.onSubmit } action="#" className="mdl-cell mdl-cell-12-col comments-form-js">
+
           <div >
             <div className="mdl-textfield mdl-js-textfield">
               <input className="mdl-textfield__input" type="text" name="author" />

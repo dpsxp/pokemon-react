@@ -10,6 +10,7 @@ const ImageItem = React.createClass({
   loadImage: function() {
     var img = document.createElement('img');
     img.addEventListener('load', () => this.setState({ loaded: true }) );
+    img.addEventListener('error', () => this.setState({ broken: true }) );
     img.src = this.props.src;
   },
 
@@ -23,7 +24,9 @@ const ImageItem = React.createClass({
         alt = this.props.alt,
         title = this.props.title;
 
-    if (!this.state.loaded) {
+    if (this.state.broken) {
+      return(<i className="broken-image--big material-icons">broken_image</i>);
+    } else if (!this.state.loaded) {
       return(<Spinner />);
     } else {
       return <img className="thumb" src={ src } alt={ alt } title={ title } />;

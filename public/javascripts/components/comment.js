@@ -6,7 +6,7 @@ const Comment = React.createClass({
     var comment = this.props.comment;
 
     return(
-      <div>
+      <div className="comment-item-js">
         <h5>{ comment.author } ({ comment.email })</h5>
         <div>
           { comment.message }
