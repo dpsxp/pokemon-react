@@ -19,22 +19,17 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-if (app.get('env') === 'production') {
-  app.use(express.static(path.join(__dirname, 'dist')));
+var browserify = require('browserify-middleware');
 
-} else {
-  var browserify = require('browserify-middleware');
+// Javascript settings
+browserify.settings({
+  transform: ['babelify', 'reactify']
+});
 
-  // Javascript settings
-  browserify.settings({
-    transform: ['babelify', 'reactify']
-  });
+var jsPath = path.join(__dirname, 'public', 'javascripts', 'index.js');
+app.use('/javascripts/bundle.js', browserify(jsPath));
 
-  var jsPath = path.join(__dirname, 'public', 'javascripts', 'index.js');
-  app.use('/javascripts/bundle.js', browserify(jsPath));
-
-  app.use(express.static(path.join(__dirname, 'public')));
-}
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 
