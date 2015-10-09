@@ -39,7 +39,7 @@ const Accordion = React.createClass({
           { this.props.children }
         </div>
 
-        <button className="mdl-button mdl-button--primary mdl-js-button" onClick={this.toggle}>
+        <button className="accordion-btn-js mdl-button mdl-button--primary mdl-js-button" onClick={this.toggle}>
           { message }
         </button>
       </div>

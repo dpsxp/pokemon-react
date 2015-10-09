@@ -11,13 +11,12 @@ const MainNav = React.createClass({
     node.parentNode.classList.toggle('is-visible');
   },
 
-
   componentWillReceiveProps(nextProps) {
     /* jshint ignore: start */
     if (nextProps.location.pathname === '/') {
       this.setState({ back: undefined });
     } else {
-      this.setState({ back: `/${this.props.params.splat}` });
+      this.setState({ back: '/' });
     }
     /* jshint ignore: end */
   },
@@ -34,7 +33,7 @@ const MainNav = React.createClass({
 
     if (this.state.back) {
       return (
-        <Link className="mdl-layout__drawer-button" to={ this.state.back }>
+        <Link className="back-btn-js mdl-layout__drawer-button" to={ this.state.back }>
           <i className="material-icons">keyboard_arrow_left</i>
         </Link>
       );
