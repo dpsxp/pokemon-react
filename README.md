@@ -1,6 +1,6 @@
 # Pokedex
 
-Aplicacao hospedada no heroku [app][app]
+Aplicação hospedada no heroku [app][app]
 
 ## Rodando
 
@@ -24,7 +24,13 @@ Após isto a app esterá disponível no endereço http://localhost:3000
 ## E2E tests
 
 Primeiramente instale o [docker][docker] e [docker-compose][docker-compose] depois basta
-rodar o comando `docker-compose up` e entao `npm run e2e`.
+rodar o comando
+
+`docker-compose up -d`
+
+para subir a aplicação e então
+
+`APP_URL='http://pokedex.com' npm run e2e`.
 
 Todos os testes sao efetuados no firefox
 
