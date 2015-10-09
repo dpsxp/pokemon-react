@@ -6,8 +6,8 @@ var uglify = require('gulp-uglify');
 var minify = require('gulp-minify-css');
 
 const BUILD_DIR = {
-  js: 'dist/javascripts',
-  css: 'dist/stylesheets'
+  js: 'public/dist/javascripts',
+  css: 'public/dist/stylesheets'
 };
 
 gulp.task('js', function() {
