@@ -5,7 +5,7 @@ const LoadingScreen = React.createClass({
 
   render() {
     return(
-      <div className="loading-screen">
+      <div className="loading-screen loading-screen-js">
         <Spinner />
       </div>
     );

@@ -95,8 +95,6 @@ const MainItem = React.createClass({
       );
     }
 
-    console.log(pokemon);
-
     return(
       <div className="mdl-grid">
         <div className="mdl-cell mdl-cell--12-col">
