@@ -1,10 +1,10 @@
-const TIMEOUT = 3000;
-
 module.exports = {
+  tags: ['list'],
+
   'List of pokemons': function(client) {
     client
-      .url('http://localhost:3000')
-      .waitForElementVisible('.load-more-js', TIMEOUT)
-      .waitForElementVisible('.pokedex-list-js', TIMEOUT);
+      .url(client.globals.pageURL)
+      .waitForElementVisible('.load-more-js')
+      .waitForElementVisible('.pokedex-list-js');
   }
 };

@@ -1,19 +1,17 @@
-const TIMEOUT = 3000;
-
 module.exports = {
   tags: ['navigation'],
 
   before: function(client) {
     client
-      .url('http://localhost:3000');
+      .url(client.globals.pageURL);
   },
 
   'Go to Pokemon': function(client) {
     client
-      .waitForElementVisible('.pokedex-list-js', TIMEOUT)
-      .waitForElementVisible('.pokemon-item-js:first-child a:first-child', TIMEOUT)
+      .waitForElementVisible('.pokedex-list-js')
+      .waitForElementVisible('.pokemon-item-js:first-child a:first-child')
       .click('.pokemon-item-js a')
-      .waitForElementPresent('.main-item-js', TIMEOUT);
+      .waitForElementPresent('.main-item-js');
   },
 
   'Back to home': function(client) {
@@ -27,9 +25,9 @@ module.exports = {
 
   'Go to Evolution': function(client) {
     client
-      .waitForElementVisible('.accordion-btn-js', TIMEOUT)
+      .waitForElementVisible('.accordion-btn-js')
       .click('.accordion-btn-js')
-      .waitForElementVisible('.pokemon-item-js', TIMEOUT)
+      .waitForElementVisible('.pokemon-item-js')
       .click('.pokemon-item-js:first-child a');
   },
 
@@ -37,7 +35,7 @@ module.exports = {
     this['Back to home'](client);
 
     client
-      .waitForElementVisible('.pokedex-list-js', TIMEOUT);
+      .waitForElementVisible('.pokedex-list-js');
   }
 
 };

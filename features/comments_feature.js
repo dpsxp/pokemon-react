@@ -1,5 +1,3 @@
-const TIMEOUT = 3000;
-
 var randomEmail = 'testuser' + Math.random() + '@email.com',
     randomAuthor = 'Teste user' + Math.random(),
     randomMessage = 'My teste message' + Math.random();
@@ -9,16 +7,16 @@ module.exports = {
 
   'Go to Pokemon': function(client) {
     client
-      .url('http://localhost:3000')
-      .waitForElementVisible('.pokedex-list-js', TIMEOUT)
-      .waitForElementVisible('.pokemon-item-js:first-child a:first-child', TIMEOUT)
+      .url(client.globals.pageURL)
+      .waitForElementVisible('.pokedex-list-js')
+      .waitForElementVisible('.pokemon-item-js:first-child a:first-child')
       .click('.pokemon-item-js a');
   },
 
   'Loading Screen': function(client) {
     client
-      .waitForElementVisible('.loading-screen-js', TIMEOUT)
-      .waitForElementNotPresent('.loading-screen-js', TIMEOUT);
+      .waitForElementVisible('.loading-screen-js')
+      .waitForElementNotPresent('.loading-screen-js');
   },
 
   'Fill the form': function(client) {
@@ -28,7 +26,7 @@ module.exports = {
         message = form + ' textarea[name="message"]';
 
     client
-      .waitForElementVisible(form, TIMEOUT)
+      .waitForElementVisible(form)
       .setValue(author, randomAuthor)
       .setValue(email, randomEmail)
       .setValue(message, randomMessage)
@@ -40,7 +38,7 @@ module.exports = {
 
   'See the comment on comments list': function(client) {
     client
-      .waitForElementVisible('.comments-box-js .comment-item-js:last-child', TIMEOUT)
+      .waitForElementVisible('.comments-box-js .comment-item-js:last-child')
       .pause(TIMEOUT) // Time to load the others comments
       .assert.containsText('.comments-box-js .comment-item-js:last-child', randomAuthor)
       .assert.containsText('.comments-box-js .comment-item-js:last-child', randomEmail)

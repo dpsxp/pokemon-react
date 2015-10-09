@@ -1,6 +1,7 @@
 {
   "src_folders" : ["features"],
   "output_folder" : "reports",
+  "globals_path" : "features/configs/globals.js",
 
   "selenium" : {
     "start_process" : true,
