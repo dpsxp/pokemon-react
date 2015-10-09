@@ -37,7 +37,7 @@ const List = React.createClass({
 
     if (!this.state.finished) {
       lazy = (
-        <div className="load-more">
+        <div className="load-more load-more-js">
           <Spinner />
           <Lazy onReady={ this._loadMore } />
         </div>
@@ -45,7 +45,7 @@ const List = React.createClass({
     }
 
     return(
-      <div className="mdl-grid">
+      <div className="mdl-grid pokedex-list-js">
         {
           pokemons.map(function(pokemon) {
             return (

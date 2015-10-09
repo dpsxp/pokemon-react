@@ -4,6 +4,7 @@ module.exports = {
   'List of pokemons': function(client) {
     client
       .url('http://localhost:3000')
-      .waitForElementVisible('body', TIMEOUT);
+      .waitForElementVisible('.load-more-js', TIMEOUT)
+      .waitForElementVisible('.pokedex-list-js', TIMEOUT);
   }
-}
+};
