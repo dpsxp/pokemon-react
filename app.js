@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var routes = require('./routes/index');
+var gzip = require('connect-gzip-static');
 
 var app = express();
 
@@ -19,17 +20,24 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-var browserify = require('browserify-middleware');
+if (app.get('env') === 'production') {
+  var assetsDir = path.join(__dirname, 'public');
+  var oneDay = 86400000;
 
-// Javascript settings
-browserify.settings({
-  transform: ['babelify', 'reactify']
-});
+  app.use(gzip(assetsDir, { maxAge: oneDay }));
+  app.use(express.static(assetsDir));
+} else {
+  var browserify = require('browserify-middleware');
 
-var jsPath = path.join(__dirname, 'public', 'javascripts', 'index.js');
-app.use('/javascripts/bundle.js', browserify(jsPath));
+  // Javascript settings
+  browserify.settings({
+    transform: ['babelify', 'reactify']
+  });
 
-app.use(express.static(path.join(__dirname, 'public')));
+  var jsPath = path.join(__dirname, 'source', 'javascripts', 'index.js');
+  app.use('/javascripts/bundle.js', browserify(jsPath));
+  app.use(express.static(path.join(__dirname, 'source')));
+}
 
 app.use('/', routes);
 

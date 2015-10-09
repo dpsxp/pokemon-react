@@ -1,7 +1,7 @@
-import PokedexService from '../../public/javascripts/services/pokedex';
-import BaseService from '../../public/javascripts/services/base';
-import PokemonModel from '../../public/javascripts/models/pokemon';
-import dispatcher from '../../public/javascripts/dispatcher';
+import PokedexService from '../../source/javascripts/services/pokedex';
+import BaseService from '../../source/javascripts/services/base';
+import PokemonModel from '../../source/javascripts/models/pokemon';
+import dispatcher from '../../source/javascripts/dispatcher';
 
 describe('PokedexService', function() {
   describe('#BASE_URL', function() {

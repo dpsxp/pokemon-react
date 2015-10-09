@@ -1,5 +1,5 @@
-import BaseService from '../../public/javascripts/services/base';
-import Cache from '../../public/javascripts/services/cache';
+import BaseService from '../../source/javascripts/services/base';
+import Cache from '../../source/javascripts/services/cache';
 
 describe('BaseService', function() {
   afterEach(function() {
