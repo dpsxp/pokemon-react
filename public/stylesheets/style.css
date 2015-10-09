@@ -23,3 +23,9 @@
 .mdl-badge[data-badge]:after {
     top: 0;
 }
+
+
+/* Broken image icon */
+.broken-image--big {
+    font-size: 110px;
+}
