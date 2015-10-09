@@ -5,6 +5,7 @@
   "scripts": {
     "start": "nodemon ./bin/www",
     "test": "karma start",
+    "e2e" : "nightwatch",
     "install_hook": "cp -f ./hooks/pre-push ./.git/hooks/"
   },
   "engines": {
@@ -37,6 +38,7 @@
     "karma-chrome-launcher": "^0.2.0",
     "karma-jasmine": "^0.3.6",
     "karma-sinon": "^1.0.4",
+    "nightwatch": "^0.8.4",
     "sinon": "^1.17.1"
   }
 }
