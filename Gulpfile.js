@@ -18,6 +18,7 @@ gulp.task('js', function() {
     }))
     .pipe(uglify())
     .pipe(rename('bundle.js'))
+    .pipe(gulp.dest(BUILD_DIR.js))
     .pipe(gzip())
     .pipe(gulp.dest(BUILD_DIR.js));
 });
@@ -25,6 +26,7 @@ gulp.task('js', function() {
 gulp.task('css', function() {
   gulp.src(['source/stylesheets/style.css'])
     .pipe(minify())
+    .pipe(gulp.dest(BUILD_DIR.css))
     .pipe(gzip())
     .pipe(gulp.dest(BUILD_DIR.css));
 });

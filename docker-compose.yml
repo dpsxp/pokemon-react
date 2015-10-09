@@ -1,0 +1,25 @@
+server:
+  image: nginx:latest
+  hostname: 'pokedex.com'
+  volumes:
+    - './settings/pokedex.conf:/etc/nginx/conf.d/default.conf'
+  links:
+    - 'app:app.com'
+  volumes_from:
+    - 'app'
+  ports:
+    - '3000:80'
+
+app:
+  build: .
+  volumes:
+    - '.:/app'
+
+firefox:
+  image: 'selenium/standalone-firefox'
+  ports:
+    - '4444:4444'
+  links:
+    - 'server:pokedex.com'
+
+
