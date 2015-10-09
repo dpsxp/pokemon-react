@@ -21,12 +21,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 if (app.get('env') === 'production') {
-  var assetsDir = path.join(__dirname, 'public/dist');
+  var assetsDir = path.join(__dirname, 'public');
   var oneDay = 86400000;
 
   app.use(gzip(assetsDir, { maxAge: oneDay }));
   app.use(express.static(assetsDir));
-
 } else {
   var browserify = require('browserify-middleware');
 
@@ -35,10 +34,9 @@ if (app.get('env') === 'production') {
     transform: ['babelify', 'reactify']
   });
 
-  var jsPath = path.join(__dirname, 'public', 'javascripts', 'index.js');
+  var jsPath = path.join(__dirname, 'source', 'javascripts', 'index.js');
   app.use('/javascripts/bundle.js', browserify(jsPath));
-
-  app.use(express.static(path.join(__dirname, 'public')));
+  app.use(express.static(path.join(__dirname, 'source')));
 }
 
 app.use('/', routes);

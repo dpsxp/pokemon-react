@@ -6,12 +6,12 @@ var uglify = require('gulp-uglify');
 var minify = require('gulp-minify-css');
 
 const BUILD_DIR = {
-  js: 'public/dist/javascripts',
-  css: 'public/dist/stylesheets'
+  js: 'public/javascripts',
+  css: 'public/stylesheets'
 };
 
 gulp.task('js', function() {
-  gulp.src(['public/javascripts/index.js'])
+  gulp.src(['source/javascripts/index.js'])
     .pipe(browserify({
       debug: false,
       transform: ['babelify', 'reactify']
@@ -23,7 +23,7 @@ gulp.task('js', function() {
 });
 
 gulp.task('css', function() {
-  gulp.src(['public/stylesheets/style.css'])
+  gulp.src(['source/stylesheets/style.css'])
     .pipe(minify())
     .pipe(gzip())
     .pipe(gulp.dest(BUILD_DIR.css));
