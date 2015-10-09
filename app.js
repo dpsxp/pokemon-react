@@ -4,7 +4,6 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var browserify = require('browserify-middleware');
 var routes = require('./routes/index');
 
 var app = express();
@@ -20,15 +19,22 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-// Javascript settings
-browserify.settings({
-  transform: ['babelify', 'reactify']
-});
+if (app.get('env') === 'production') {
+  app.use(express.static(path.join(__dirname, 'dist')));
 
-var jsPath = path.join(__dirname, 'public', 'javascripts', 'index.js');
-app.use('/js/bundle.js', browserify(jsPath));
+} else {
+  var browserify = require('browserify-middleware');
 
-app.use(express.static(path.join(__dirname, 'public')));
+  // Javascript settings
+  browserify.settings({
+    transform: ['babelify', 'reactify']
+  });
+
+  var jsPath = path.join(__dirname, 'public', 'javascripts', 'index.js');
+  app.use('/javascripts/bundle.js', browserify(jsPath));
+
+  app.use(express.static(path.join(__dirname, 'public')));
+}
 
 app.use('/', routes);
 
