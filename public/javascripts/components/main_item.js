@@ -18,6 +18,7 @@ import Sprites from './sprites';
 import Evolutions from './evolutions';
 import LoadingScreen from './loading_screen';
 import ImageItem from './image_item';
+import Ability from './ability';
 
 const FIREBASE_URL = 'https://luminous-heat-8041.firebaseio.com/pokedex';
 
@@ -94,6 +95,8 @@ const MainItem = React.createClass({
       );
     }
 
+    console.log(pokemon);
+
     return(
       <div className="mdl-grid">
         <div className="mdl-cell mdl-cell--12-col">
@@ -113,6 +116,17 @@ const MainItem = React.createClass({
 
         <div className="mdl-cell mdl-cell--2-col">
           <ImageItem src={ pokemon.thumbUrl() } alt={pokemon.name} />
+        </div>
+
+        <div className="mdl-cell mdl-cell--12-col">
+          <h3>Abilities</h3>
+          <ul>
+            {
+              pokemon.abilities.map( (ability) => {
+               return <li><Ability ability={ ability } /></li>
+              })
+            }
+          </ul>
         </div>
 
         <div className="mdl-cell mdl-cell--12-col">
