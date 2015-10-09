@@ -15,8 +15,8 @@ module.exports = {
 
   'Loading Screen': function(client) {
     client
-      .waitForElementVisible('.loading-screen-js')
-      .waitForElementNotPresent('.loading-screen-js');
+      .waitForElementVisible('.loading-screen-js', 3000, false)
+      .waitForElementNotPresent('.loading-screen-js', 3000, false);
   },
 
   'Fill the form': function(client) {
@@ -39,7 +39,7 @@ module.exports = {
   'See the comment on comments list': function(client) {
     client
       .waitForElementVisible('.comments-box-js .comment-item-js:last-child')
-      .pause(TIMEOUT) // Time to load the others comments
+      .pause(3000) // Time to load the others comments
       .assert.containsText('.comments-box-js .comment-item-js:last-child', randomAuthor)
       .assert.containsText('.comments-box-js .comment-item-js:last-child', randomEmail)
       .assert.containsText('.comments-box-js .comment-item-js:last-child', randomMessage);
