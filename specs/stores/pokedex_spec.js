@@ -1,7 +1,7 @@
-import PokedexStore from '../../public/javascripts/stores/pokedex';
-import PokedexService from '../../public/javascripts/services/pokedex';
-import dispatcher from '../../public/javascripts/dispatcher';
-import PokedexActions from '../../public/javascripts/actions/pokedex_actions';
+import PokedexStore from '../../source/javascripts/stores/pokedex';
+import PokedexService from '../../source/javascripts/services/pokedex';
+import dispatcher from '../../source/javascripts/dispatcher';
+import PokedexActions from '../../source/javascripts/actions/pokedex_actions';
 
 describe('PokedexStore', function() {
   describe('#getInitialState', function() {

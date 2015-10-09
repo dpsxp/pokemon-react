@@ -1,5 +1,5 @@
-import Pokemon from '../../public/javascripts/models/pokemon';
-import BaseService from  '../../public/javascripts/services/base';
+import Pokemon from '../../source/javascripts/models/pokemon';
+import BaseService from  '../../source/javascripts/services/base';
 import url from 'url';
 
 describe('Pokemon', function() {

@@ -1,8 +1,8 @@
-import PokemonStore from '../../public/javascripts/stores/pokemon';
-import PokemonService from '../../public/javascripts/services/pokemon';
-import dispatcher from '../../public/javascripts/dispatcher';
-import PokemonActions from '../../public/javascripts/actions/pokemon_actions';
-import PokemonModel from '../../public/javascripts/models/pokemon';
+import PokemonStore from '../../source/javascripts/stores/pokemon';
+import PokemonService from '../../source/javascripts/services/pokemon';
+import dispatcher from '../../source/javascripts/dispatcher';
+import PokemonActions from '../../source/javascripts/actions/pokemon_actions';
+import PokemonModel from '../../source/javascripts/models/pokemon';
 
 describe('PokemonStore', function() {
   describe('#getInitialState', function() {

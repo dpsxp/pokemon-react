@@ -1,5 +1,5 @@
 {
-  "src_folders" : ["features"],
+  "src_folders" : ["features/specs"],
   "output_folder" : "reports",
   "globals_path" : "features/configs/globals.js",
 
