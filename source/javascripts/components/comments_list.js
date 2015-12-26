@@ -11,7 +11,7 @@ const CommentsList = React.createClass({
         <h3>
           <span className="mdl-badge" data-badge={ comments.length }>Comments</span>
         </h3>
-         { comments.map((comment) => <Comment comment={comment} /> ) }
+         { comments.map((comment) => <Comment key={ comment.id } comment={comment} /> ) }
       </div>
     );
     /* jshint ignore: end */

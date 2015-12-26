@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import url from 'url';
 import Spinner from './spinner';
 import { throttle } from 'lodash';
@@ -18,7 +19,7 @@ const Lazy = React.createClass({
 
   componentDidMount() {
     this.check = throttle(() => {
-      var node = this.getDOMNode(),
+      var node = ReactDOM.findDOMNode(this),
           top = node.getBoundingClientRect().top + 100;
 
       if (top < window.screen.height) {

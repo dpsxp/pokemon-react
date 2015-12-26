@@ -6,9 +6,6 @@ import Firebase from 'firebase';
 // Services
 import PokemonService from '../services/pokemon';
 
-// Stores
-import store from '../stores/store';
-
 // Components
 import CommentsForm from './comments_form';
 import CommentsList from './comments_list';
@@ -18,45 +15,44 @@ import Evolutions from './evolutions';
 import LoadingScreen from './loading_screen';
 import ImageItem from './image_item';
 import Ability from './ability';
+import { connect } from 'react-redux';
 
 const FIREBASE_URL = 'https://luminous-heat-8041.firebaseio.com/pokedex';
 
+var mapStateToProps = (state) => {
+  return state.pokemon;
+}
+
+var mapDispatch = (dispatch) => {
+  return {
+    load: (id) => {
+      dispatch({
+        type: 'pokemon/load',
+        id: id
+      })
+    }
+  }
+}
+
 const MainItem = React.createClass({
   mixins: [ReactFireMixin],
-
-  getInitialState() {
-    return {
-      pokemon: PokemonStore.getState(),
-      loaded: false,
-      comments: []
-    };
-  },
-
-  _onLoad() {
-    this.setState({
-      pokemon: PokemonStore.getState(),
-      loaded: true
-    });
-
-  },
 
   _bindFirebase(id) {
     this.bindAsArray(new Firebase(FIREBASE_URL + '/' + id ), 'comments');
   },
 
   componentWillReceiveProps(nextProps) {
-    this.unbind('comments');
-
-    this._bindFirebase(nextProps.params.id);
-
-    PokemonStore.loadData(nextProps.params.id);
+    if (nextProps.params.id !== this.props.params.id) {
+      this.unbind('comments');
+      this._bindFirebase(nextProps.params.id);
+      this.props.load(nextProps.params.id);
+    }
   },
 
   componentWillMount() {
     this._bindFirebase(this.props.params.id);
-    PokemonStore.loadData(this.props.params.id);
+    this.props.load(this.props.params.id);
   },
-
 
   handleComment(evt, data) {
     var comment =  data;
@@ -65,12 +61,12 @@ const MainItem = React.createClass({
 
   render() {
     /* jshint ignore: start */
-    if (!this.state.loaded) {
+    if (!this.props.loaded) {
       return <LoadingScreen />
     }
 
-    var pokemon = this.state.pokemon,
-        comments = this.state.comments;
+    var pokemon = this.props.pokemon,
+        comments = this.props.comments;
 
     var descriptionItem = function() {
       if (pokemon.descriptions.length > 0) {
@@ -138,4 +134,4 @@ const MainItem = React.createClass({
   }
 });
 
-export default MainItem;
+export default connect(mapStateToProps, mapDispatch)(MainItem);

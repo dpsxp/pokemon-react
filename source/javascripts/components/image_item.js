@@ -3,19 +3,32 @@ import url from 'url';
 import Spinner from './spinner';
 
 const ImageItem = React.createClass({
-  getInitialState: function() {
+  getInitialState() {
     return { loaded: false };
   },
 
-  loadImage: function() {
-    var img = document.createElement('img');
-    img.addEventListener('load', () => this.setState({ loaded: true }) );
-    img.addEventListener('error', () => this.setState({ broken: true }) );
-    img.src = this.props.src;
+  broken() {
+    this.setState({ broken: true });
   },
 
-  componentWillMount: function() {
+  loaded() {
+    this.setState({ loaded: true })
+  },
+
+  loadImage() {
+    this.img = document.createElement('img');
+    this.img.addEventListener('load', this.loaded);
+    this.img.addEventListener('error', this.broken);
+    this.img.src = this.props.src;
+  },
+
+  componentWillMount() {
     this.loadImage();
+  },
+
+  componentWillUnmount() {
+    this.img.removeEventListener('load', this.loaded);
+    this.img.removeEventListener('error', this.broken);
   },
 
   render() {

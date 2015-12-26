@@ -1,8 +1,9 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 
 const Spinner = React.createClass({
   componentDidMount() {
-    new MaterialSpinner(this.getDOMNode());
+    new MaterialSpinner(ReactDOM.findDOMNode(this));
   },
 
   render() {
