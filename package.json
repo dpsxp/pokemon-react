@@ -34,10 +34,14 @@
     "lodash": "^3.10.1",
     "morgan": "~1.5.1",
     "nodemon": "^1.7.1",
-    "react": "^0.13.3",
+    "react": "^0.14.3",
+    "react-dom": "^0.14.3",
+    "react-redux": "^4.0.5",
     "react-router": "^1.0.0-rc1",
     "reactfire": "^0.5.1",
     "reactify": "^1.1.1",
+    "redux": "^3.0.5",
+    "redux-simple-router": "^1.0.2",
     "serve-favicon": "~2.2.0"
   },
   "devDependencies": {

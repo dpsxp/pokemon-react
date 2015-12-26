@@ -7,8 +7,7 @@ import Firebase from 'firebase';
 import PokemonService from '../services/pokemon';
 
 // Stores
-import PokemonStore from '../stores/pokemon';
-import { dispatcher } from '../stores/pokedex';
+import store from '../stores/store';
 
 // Components
 import CommentsForm from './comments_form';
@@ -54,14 +53,10 @@ const MainItem = React.createClass({
   },
 
   componentWillMount() {
-    this.dispatcherToken = PokemonStore.addListener(this._onLoad);
     this._bindFirebase(this.props.params.id);
     PokemonStore.loadData(this.props.params.id);
   },
 
-  componentWillUnmount() {
-    this.dispatcherToken.remove(this._onLoad);
-  },
 
   handleComment(evt, data) {
     var comment =  data;

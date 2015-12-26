@@ -2,7 +2,7 @@ import { defaults } from 'lodash';
 import BaseService from './base';
 import { pokemonFactory } from '../models/pokemon';
 import PokemonActions from '../actions/pokemon_actions';
-import dispatcher from '../dispatcher';
+import store from '../stores/store.js';
 
 var PokemonService = {
   BASE_URL: BaseService.BASE_URL + '/pokemon',
@@ -15,7 +15,7 @@ var PokemonService = {
         var action = PokemonActions.LOADED;
         action.pokemon = pokemon;
 
-        dispatcher.dispatch(action);
+        store.dispatch(action);
 
         return pokemon;
       });

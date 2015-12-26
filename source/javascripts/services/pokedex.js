@@ -1,26 +1,25 @@
 import BaseService from './base';
 import { partial, defaults } from 'lodash';
 import { pokemonFactory } from '../models/pokemon';
-import dispatcher from '../dispatcher';
 import PokedexActions from '../actions/pokedex_actions';
+import store from '../stores/store';
 
 function parsePokemons(start, end, { pokemon }) {
-  var pokemons = pokemon
-    .slice(start, end)
-    .map(pokemonFactory);
+  var pokemons = pokemon.slice(start, end).map(pokemonFactory);
 
   return { pokemons: pokemons, total: pokemon.length };
 }
 
-function dispatchAction({ pokemons, total}) {
-  var action = PokedexActions.FETCHED;
+function dispatchAction(page, { pokemons, total}) {
+  var action = PokedexActions.LOADED;
 
   action.pokemons = pokemons;
   action.total = total;
+  action.page = page
 
-  dispatcher.dispatch(action);
+  store.dispatch(action);
 
-  return { pokemons: pokemons, total: total };
+  return { pokemons, total, page };
 }
 
 var PokedexService = {
@@ -33,7 +32,7 @@ var PokedexService = {
     return BaseService
       .get.call(this, '', cache)
       .then(partial(parsePokemons, start, end))
-      .then(dispatchAction);
+      .then(partial(dispatchAction, page));
   }
 };
 

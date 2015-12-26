@@ -1,9 +1,16 @@
+import React from 'react';
+import PokemonModel from '../models/pokemon';
 
 const PokedexActions = {
-  FETCHED: {
-    type: 'pokedex/fetched',
-    pokemons: [],
-    total: 0
+  LOAD: {
+    type: 'pokedex/load',
+    page: React.PropTypes.number,
+    limit: 50
+  },
+  LOADED: {
+    type: 'pokedex/loaded',
+    pokemons: React.PropTypes.arrayOf(React.PropTypes.instanceOf(PokemonModel)),
+    total: React.PropTypes.number
   }
 };
 
