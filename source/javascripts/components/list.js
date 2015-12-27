@@ -42,8 +42,8 @@ var component = (props) => {
       {
         pokemons.map((pokemon) => {
           return (
-            <div className="mdl-cell mdl-cell--4-col">
-              <ListItem key={ pokemon.id } pokemon={ pokemon } />
+            <div key={ pokemon.id } className="mdl-cell mdl-cell--4-col">
+              <ListItem pokemon={ pokemon } />
             </div>
           );
         })
