@@ -6,7 +6,7 @@ let initialState = {
   limit: 30
 }
 
-const pokedex = (state = initialState, action) => {
+const pokedex = (state = initialState, action = {}) => {
   switch(action.type) {
     case 'pokedex/load':
       return Object.assign({}, state, {
