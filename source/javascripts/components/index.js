@@ -10,7 +10,6 @@ import Ability from './ability';
 import Comment from './comment';
 import CommentsList from './comments_list';
 import CommentsForm from './comments_form';
-import Sprites from './sprites';
 import Description from './description';
 import Evolutions from './evolutions';
 
@@ -27,7 +26,6 @@ export {
   Comment,
   CommentsList,
   CommentsForm,
-  Sprites,
   Description,
   Evolutions
 }

@@ -10,7 +10,6 @@ import PokemonService from '../services/pokemon';
 import CommentsForm from './comments_form';
 import CommentsList from './comments_list';
 import Description from './description';
-import Sprites from './sprites';
 import Evolutions from './evolutions';
 import LoadingScreen from './loading_screen';
 import ImageItem from './image_item';
