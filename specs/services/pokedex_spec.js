@@ -1,7 +1,7 @@
 import PokedexService from '../../source/javascripts/services/pokedex';
 import BaseService from '../../source/javascripts/services/base';
 import PokemonModel from '../../source/javascripts/models/pokemon';
-import dispatcher from '../../source/javascripts/dispatcher';
+import store from '../../source/javascripts/stores/store';
 
 describe('PokedexService', function() {
   describe('#BASE_URL', function() {
@@ -27,13 +27,14 @@ describe('PokedexService', function() {
     });
 
     it('dispatches a fetched action', function(done) {
-      var spy = spyOn(dispatcher, 'dispatch');
+      var spy = spyOn(store, 'dispatch');
 
-      PokedexService.get().then( ({ pokemons, total }) => {
+      PokedexService.get(10).then( ({ pokemons, total, page }) => {
         expect(spy).toHaveBeenCalledWith({
-          type: 'pokedex/fetched',
+          type: 'pokedex/loaded',
           pokemons: pokemons,
-          total: total
+          total: total,
+          page: 10
         });
 
         done();
@@ -42,12 +43,14 @@ describe('PokedexService', function() {
       this.server.respond();
     });
 
-    it('returns a promise filled with a object with list of Pokemon models and the total pokemons in the server', function(done) {
-      PokedexService.get().then(({ pokemons, total }) => {
+    it('returns a promise filled with a object with list of Pokemon models and the total pokemons in the server and the current page', function(done) {
+      PokedexService.get(10).then(({ pokemons, total, page }) => {
         expect(total).toEqual(this.response.pokemon.length);
         pokemons.forEach(function(pokemon) {
           expect(pokemon).toEqual(jasmine.any(PokemonModel));
         });
+        expect(page).toEqual(10);
+
         done();
       });
 

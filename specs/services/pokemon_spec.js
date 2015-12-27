@@ -1,7 +1,7 @@
 import PokemonService from '../../source/javascripts/services/pokemon';
 import BaseService from '../../source/javascripts/services/base';
 import PokemonModel from '../../source/javascripts/models/pokemon';
-import dispatcher from '../../source/javascripts/dispatcher';
+import store from '../../source/javascripts/stores/store';
 
 describe('PokemonService', function() {
   describe('#BASE_URL', function() {
@@ -31,7 +31,7 @@ describe('PokemonService', function() {
     });
 
     it('dispatches a pokemon/loaded action', function(done) {
-      var spy = spyOn(dispatcher, 'dispatch');
+      var spy = spyOn(store, 'dispatch');
 
       PokemonService.get(this.id).then( (pokemon) => {
         expect(spy).toHaveBeenCalledWith({
@@ -46,7 +46,6 @@ describe('PokemonService', function() {
     });
 
     it('returns a promise filled with a Pokemon model', function(done) {
-
       PokemonService.get(this.id).then(function(pokemon) {
         expect(pokemon).toEqual(jasmine.any(PokemonModel));
         done();
