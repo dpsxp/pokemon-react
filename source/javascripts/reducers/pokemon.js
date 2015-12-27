@@ -7,7 +7,7 @@ const initialState = {
   comments: []
 }
 
-const pokemon = (state = initialState, action) => {
+const pokemon = (state = initialState, action = {}) => {
   switch(action.type) {
     case 'pokemon/load':
       return Object.assign({}, state, { pokemon: PokemonSerive.get(action.id) });
