@@ -13,7 +13,7 @@ const Evolutions = React.createClass({
 
     var createItem = function(evo) {
       return(
-        <div className="mdl-cell mdl-cell--4-col">
+        <div key={ evo.resource_uri } className="mdl-cell mdl-cell--4-col">
           <ListItem pokemon={ evo } />
         </div>
       );

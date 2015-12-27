@@ -112,7 +112,11 @@ const MainItem = React.createClass({
           <ul>
             {
               pokemon.abilities.map( (ability) => {
-               return <li><Ability ability={ ability } /></li>
+               return(
+                 <li key={ ability.resource_uri }>
+                   <Ability ability={ ability } />
+                 </li>
+               );
               })
             }
           </ul>
