@@ -1,35 +1,30 @@
 import React from 'react';
 import { Link } from 'react-router';
-
 import PokemonModel from '../models/pokemon';
+import { Lazy, ImageItem } from '../components';
 
-import Lazy from './lazy';
-import ImageItem from './image_item.js';
+const ListItem = ({ pokemon }) => {
+  var model = new PokemonModel(pokemon);
 
-const ListItem = React.createClass({
-  render() {
-    var pokemon = new PokemonModel(this.props.pokemon);
-
-    /* jshint ignore:start */
-    return(
-        <div className="pokemon-item-js mdl-card mdl-shadow--8dp mdl-card--border">
-          <div className="mdl-card__title mdl-card--expand">
-            <Lazy>
-              <Link to={`/pokemon/${pokemon.id}`}>
-                <ImageItem src={pokemon.thumbUrl()} />
-              </Link>
-            </Lazy>
-          </div>
-
-          <div className="mdl-card__actions mdl-card--border">
-            <Link className="mdl-button mdl-button--colored" to={`/pokemon/${pokemon.id}`}>
-              { pokemon.name }
+  /* jshint ignore:start */
+  return(
+      <div className="pokemon-item-js mdl-card mdl-shadow--8dp mdl-card--border">
+        <div className="mdl-card__title mdl-card--expand">
+          <Lazy>
+            <Link to={`/pokemon/${model.id}`}>
+              <ImageItem src={model.thumbUrl()} />
             </Link>
-          </div>
+          </Lazy>
         </div>
-    );
-    /* jshint ignore:end */
-  }
-});
+
+        <div className="mdl-card__actions mdl-card--border">
+          <Link className="mdl-button mdl-button--colored" to={`/pokemon/${model.id}`}>
+            { model.name }
+          </Link>
+        </div>
+      </div>
+  );
+  /* jshint ignore:end */
+};
 
 export default ListItem;
