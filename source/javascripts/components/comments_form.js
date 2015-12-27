@@ -48,23 +48,22 @@ const CommentsForm = React.createClass({
     return(
       <div>
         <form onSubmit={ this.onSubmit } action="#" className="mdl-cell mdl-cell-12-col comments-form-js">
-
-          <div >
+          <div>
             <div className="mdl-textfield mdl-js-textfield">
               <input className="mdl-textfield__input" type="text" name="author" />
-              <label className="mdl-textfield__label" for="author">Nome...</label>
+              <label className="mdl-textfield__label" htmlFor="author">Nome...</label>
             </div>
           </div>
           <div >
             <div className="mdl-textfield mdl-js-textfield">
               <input className="mdl-textfield__input" type="email" name="email" />
-              <label className="mdl-textfield__label" for="email">Email...</label>
+              <label className="mdl-textfield__label" htmlFor="email">Email...</label>
             </div>
           </div>
           <div >
             <div className="mdl-textfield mdl-js-textfield">
               <textarea className="mdl-textfield__input" type="text" name="message" rows= "3" ></textarea>
-              <label className="mdl-textfield__label" for="message">Comentário...</label>
+              <label className="mdl-textfield__label" htmlFor="message">Comentário...</label>
             </div>
           </div>
 
